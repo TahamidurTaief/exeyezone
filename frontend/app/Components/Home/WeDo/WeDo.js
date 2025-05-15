@@ -90,17 +90,17 @@ const WeDo = () => {
 
 
                 {/* E-COMMERCE SOLUTION */}
-                <div className='flex flex-col hxl:flex-row p-5 rounded-lg border border-gray-300 w-[18.321rem] hxl:w-[38.5rem]'>
-                    <div className='hxl:flex hxl:flex-col'>
+                <div className='flex flex-col 2xl:flex-row p-5 rounded-lg border border-gray-300 w-[18.321rem] 2xl:w-[38.5rem]'>
+                    <div className='2xl:flex 2xl:flex-col'>
                         <svg className="bg-[#FFEEEF] p-3 rounded-lg" xmlns="http://www.w3.org/2000/svg" width="47" height="47" viewBox="0 0 512 512" fill="currentColor"><g><path d="M329.978 290.347H183.259a11.248 11.248 0 0 1-10.666-7.679l-52.806-157.82H87.224a12.772 12.772 0 0 1-12.912-12.265 12.5 12.5 0 0 1 12.5-12.735h35.863a20.992 20.992 0 0 1 19.907 14.331l50.58 151.168h126.652l26.319-85.738H197.962a12.772 12.772 0 0 1-12.913-12.265 12.5 12.5 0 0 1 12.5-12.735h167.192a11.247 11.247 0 0 1 10.752 14.548L340.73 282.4a11.246 11.246 0 0 1-10.752 7.947Z"></path><path d="M395.884 513.093H116.116a12.5 12.5 0 0 1 0-25h279.768a12.5 12.5 0 1 1 0 25Z"></path><path d="M461.967 417.279H50.033A52.092 52.092 0 0 1-2 365.246V73.7a52.092 52.092 0 0 1 52.033-52.03h411.934A52.092 52.092 0 0 1 514 73.7v291.546a52.092 52.092 0 0 1-52.033 52.033ZM50.033 46.67A27.064 27.064 0 0 0 23 73.7v291.546a27.064 27.064 0 0 0 27.033 27.033h411.934A27.064 27.064 0 0 0 489 365.246V73.7a27.064 27.064 0 0 0-27.033-27.03Z"></path><path d="M314.271 510.4a12.5 12.5 0 0 1-12.5-12.5v-91.85a12.5 12.5 0 0 1 25 0v91.85a12.5 12.5 0 0 1-12.5 12.5Z"></path><path d="M197.729 510.4a12.5 12.5 0 0 1-12.5-12.5v-91.85a12.5 12.5 0 0 1 25 0v91.85a12.5 12.5 0 0 1-12.5 12.5Z"></path><path d="M219.668 343.446a17.668 17.668 0 1 1 17.669-17.668 17.688 17.688 0 0 1-17.669 17.668Z"></path><path d="M289.332 343.446A17.668 17.668 0 1 1 307 325.778a17.689 17.689 0 0 1-17.668 17.668Z"></path></g></svg>
 
 
-                    <div className="flex flex-col gap-2 md:gap-4 mt-3 hxl:w-full hxl:pr-10">
+                    <div className="flex flex-col gap-2 md:gap-4 mt-3 2xl:w-full 2xl:pr-10">
                         <h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>E-commerce Solution</h2>
                         <p className='text-gray-500 text-sm font-lato font-normal'>We deliver tailored e-commerce solutions, offering seamless shopping experiences and robust functionality to drive your online business success.</p>
                     </div>
                 </div>
-                    <div className='hidden hxl:block'>
+                    <div className='hidden 2xl:block'>
                         <Image src={ecom_solution_img} alt='Exeyezone ecommerce solution' placeholder="blur" className=' rounded-lg' width="550" />
                     </div>
                 </div>
@@ -109,8 +109,8 @@ const WeDo = () => {
 
 
                 {/* CUSTOM DEVELOPMENT */}
-                <div className='flex flex-col hxl:flex-row p-5 rounded-lg border border-gray-300 w-[18.321rem] hxl:w-[38.5rem]'>
-                    <div className='hxl:flex hxl:flex-col'>
+                <div className='flex flex-col 2xl:flex-row p-5 rounded-lg border border-gray-300 w-[18.321rem] 2xl:w-[38.5rem]'>
+                    <div className='2xl:flex 2xl:flex-col'>
                         <svg width="47" height="47" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="46.0625" height="46.0625" rx="9" fill="#FFEEEF"/>
                         <path d="M20.0474 27.9711C19.9377 27.9711 19.8316 27.932 19.7482 27.8607L16.7569 25.3136C16.7059 25.2702 16.6649 25.2163 16.6369 25.1555C16.6088 25.0947 16.5943 25.0286 16.5943 24.9616C16.5943 24.8947 16.6088 24.8285 16.6369 24.7678C16.6649 24.707 16.7059 24.653 16.7569 24.6096L19.7482 22.0626C19.8415 21.9831 19.9625 21.9439 20.0847 21.9537C20.2069 21.9634 20.3202 22.0213 20.3998 22.1146C20.5651 22.3091 20.5419 22.6008 20.3474 22.7662L17.7696 24.9615L20.3474 27.1567C20.4195 27.218 20.471 27.3 20.495 27.3916C20.519 27.4831 20.5144 27.5798 20.4817 27.6686C20.4489 27.7574 20.3897 27.8341 20.3121 27.8881C20.2344 27.9422 20.1421 27.9712 20.0474 27.9711ZM25.9525 27.9711C25.8218 27.9711 25.6918 27.9159 25.6005 27.8083C25.521 27.715 25.4818 27.5939 25.4916 27.4717C25.5014 27.3495 25.5593 27.2362 25.6526 27.1567L28.2304 24.9615L25.6526 22.7662C25.5626 22.6858 25.5076 22.5734 25.4994 22.4529C25.4912 22.3325 25.5304 22.2137 25.6087 22.1218C25.6869 22.0299 25.798 21.9723 25.9182 21.9612C26.0384 21.9501 26.1581 21.9865 26.2518 22.0625L29.2431 24.6096C29.2941 24.653 29.335 24.7069 29.3631 24.7677C29.3912 24.8285 29.4057 24.8946 29.4057 24.9616C29.4057 25.0285 29.3912 25.0946 29.3631 25.1554C29.335 25.2162 29.2941 25.2701 29.2431 25.3135L26.2518 27.8606C26.1684 27.9319 26.0623 27.9711 25.9526 27.9711H25.9525ZM21.9411 29.8816C21.8722 29.8816 21.8042 29.8663 21.742 29.8368C21.6798 29.8072 21.625 29.7642 21.5816 29.7107C21.5382 29.6573 21.5073 29.5948 21.4911 29.5279C21.4749 29.4609 21.4739 29.3913 21.4881 29.3239L23.3523 20.4724C23.3776 20.3525 23.4495 20.2474 23.5522 20.1805C23.6549 20.1135 23.78 20.0901 23.9 20.1154C24.02 20.1407 24.125 20.2126 24.1919 20.3153C24.2589 20.418 24.2823 20.5431 24.257 20.6631L22.3928 29.5145C22.371 29.6181 22.3142 29.7112 22.232 29.778C22.1497 29.8448 22.047 29.8814 21.9411 29.8816Z" fill="black"/>
@@ -119,12 +119,12 @@ const WeDo = () => {
                         </svg>
                     
 
-                        <div className="flex flex-col gap-2 md:gap-4 mt-3 w-full hxl:w-full hxl:pr-8">
+                        <div className="flex flex-col gap-2 md:gap-4 mt-3 w-full 2xl:w-full 2xl:pr-8">
                             <h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Custom Development</h2>
                             <p className='text-gray-500 text-sm font-lato font-normal'>We deliver tailored software solutions to meet your unique business needs, ensuring innovation and scalability.</p>
                         </div>
                     </div>
-                        <div className='hidden hxl:block'>
+                        <div className='hidden 2xl:block'>
                             <Image src={custom_dev_img} alt='Exeyezone ecommerce solution' placeholder="blur" width="500" />
                         </div>
                     
