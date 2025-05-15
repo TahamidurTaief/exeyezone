@@ -17,7 +17,6 @@ const Course = () => {
       <div className="container mt-0 md:mt-0 font-lato">
         <div className='justify-center text-center text-[var(--secondary)] pb-10'>
             <h2 className='text-2xl md:text-4xl text-center font-lato font-bold'>Our Latest <span className="text-[var(--primary)]">Courses</span></h2>
-            {/* <p className="font-lato text-xs md:text-sm text-center">Whats happening around the world.</p> */}
         </div>
         <div className="flex ">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4 justify-around gap-6 lg:gap-6 xl:gap-6">
@@ -105,7 +104,7 @@ const Course = () => {
             </div>
         </div>
             <div className='text-center flex mt-10 lg:mt-14 transform hover:scale-105 duration-300 '>
-                <Link href="/courses" className=' text-center font-lato px-7 py-2 mx-auto border-[var(--primary)] border-2 text-[var(--secondary)] hover:text-white duration-200 hover:bg-red-500 font-semibold justify-center rounded-md  items-center'>
+                <Link href="/courses" className=' text-center font-lato px-7 py-2 mx-auto border-[var(--secondary)] hover:border-[var(--primary)] border-2 text-[var(--secondary)] hover:text-white duration-200 hover:bg-red-500 font-semibold justify-center rounded-md  items-center'>
                  Explore More Courses
                 </Link>
             </div>

@@ -120,7 +120,7 @@ const LatestProject = () => {
     
     <div className='container pb-24'>
         <div className='justify-center text-center text-[var(--secondary)] pb-10'>
-            <h2 className='text-2xl md:text-4xl text-center font-lato font-bold'> <span className="text-[var(--primary)]">Our latest product</span> for you here!</h2>
+            <h2 className='text-2xl md:text-4xl text-center font-lato font-bold'> <span className="text-[var(--primary)]">Our latest</span> products</h2>
             {/* <p className="font-lato text-xs md:text-sm text-center">Whats happening around the world.</p> */}
         </div>
 
@@ -192,8 +192,8 @@ const LatestProject = () => {
             </Swiper>
             </div>
             <div className='text-center flex mt-10 lg:mt-14 transform hover:scale-105 duration-300 '>
-                <Link href="/products" className=' text-center font-lato px-7 py-2 mx-auto border-[var(--primary)] border-2 text-[var(--secondary)] hover:text-white duration-200 hover:bg-red-500 font-semibold justify-center rounded-md  items-center'>
-                 Explore More Projects
+                <Link href="/products" className=' text-center font-lato px-7 py-2 mx-auto border-[var(--secondary)] hover:border-[var(--primary)] border-2 text-[var(--secondary)] hover:text-white duration-200 hover:bg-red-500 font-semibold justify-center rounded-md  items-center'>
+                 Explore More Products
                 </Link>
             </div>
         </div>

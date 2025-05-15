@@ -17,7 +17,7 @@ const RatingDevider = () => {
                             <HappyEmoji className="w-20"/>
                         </div>
                         <div className="flex flex-col ">
-                            <h1 className='font-poppins text-xl font-semibold'>240</h1>
+                            <h1 className='font-poppins text-xl font-semibold'>50+</h1>
                             <p className='font-lato text-sm'>Happy Customer</p>
                         </div>
                     </div>
@@ -29,7 +29,7 @@ const RatingDevider = () => {
                             <LikeIcons className="w-20"/>
                         </div>
                         <div className="flex flex-col">
-                            <h1 className='font-poppins text-xl font-semibold'>1040</h1>
+                            <h1 className='font-poppins text-xl font-semibold'>19+</h1>
                             <p className='font-lato text-sm'>Award Winner</p>
                         </div>
                     </div>
@@ -42,7 +42,7 @@ const RatingDevider = () => {
                             <HourIcons />
                         </div>
                         <div className="flex flex-col ">
-                            <h1 className='font-poppins text-xl font-semibold'>5907</h1>
+                            <h1 className='font-poppins text-xl font-semibold'>2400+</h1>
                             <p className='font-lato text-sm'>Working Hours</p>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ const RatingDevider = () => {
                             <ProjectIcons />
                         </div>
                         <div className="flex flex-col ">
-                            <h1 className='font-poppins text-xl font-semibold'>408</h1>
+                            <h1 className='font-poppins text-xl font-semibold'>59+</h1>
                             <p className='font-lato text-sm'>Compete Project</p>
                         </div>
                     </div>

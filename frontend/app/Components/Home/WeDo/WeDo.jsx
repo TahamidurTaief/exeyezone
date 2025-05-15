@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 
 import custom_dev_img from "@/public/img/custom_design.png";
@@ -11,11 +12,6 @@ const WeDo = () => {
         <div className="container relative">
             <h1 className='text-4xl md:text-4xl lg:text-5xl xl:text-6xl text-[var(--secondary)] font-raleway font-bold'>What we do</h1>
 
-            {/* <div className="absolute right-0 mt-10 2xl:block hidden">
-                <Image src={side_img} alt="exeyezone" width={250} placeholder="blur" className=' rounded-lg'/>
-                <h2 className='text-2xl font-semibold text-center font-raleway mt-3'><span className='text-[var(--primary)]'>Perfection</span> is our habit</h2>
-                <p className='text-center font-poppins text-xs text-gray-500'>Expect nothing less than perfect</p>
-            </div> */}
 
             <div className="flex flex-col sm:flex-row flex-wrap mt-10 justify-between gap-7">
                 
@@ -31,7 +27,7 @@ const WeDo = () => {
 
 
                     <div className="flex flex-col gap-2 md:gap-4  mt-3">
-                        <h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Graphic Design</h2>
+                        <Link href="/services"><h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Graphic Design</h2></Link>
                         <p className='text-gray-500 text-sm font-lato font-normal'>We create visually compelling designs that elevate your brand and captivate your audience.</p>
                     </div>
                 </div>
@@ -47,7 +43,7 @@ const WeDo = () => {
 
 
                     <div className="flex flex-col gap-2 md:gap-4  mt-3">
-                        <h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>UI/UX Design</h2>
+                        <Link href="/services"><h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>UI/UX Design</h2></Link>
                         <p className='text-gray-500 text-sm font-lato font-normal'>We craft intuitive UIs and seamless UX designs that combine aesthetics and functionality, enhancing user satisfaction and engagement.</p>
                     </div>
                 </div>
@@ -60,7 +56,7 @@ const WeDo = () => {
 
 
                     <div className="flex flex-col gap-2 md:gap-4  mt-3">
-                        <h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Web Development</h2>
+                        <Link href="/services"><h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Web Development</h2></Link>
                         <p className='text-gray-500 text-sm font-lato font-normal'>We provide custom web design and development, delivering stunning visuals and robust systems for a seamless online presence.</p>
                     </div>
                 </div>
@@ -76,7 +72,7 @@ const WeDo = () => {
 
 
                     <div className="flex flex-col gap-2 md:gap-4  mt-3">
-                        <h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Software Dev</h2>
+                        <Link href="/services"><h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Software Dev</h2></Link>
                         <p className='text-gray-500 text-sm font-lato font-normal'>We create innovative, user-friendly mobile apps that are engaging and aligned with your business goals.</p>
                     </div>
                 </div>
@@ -96,7 +92,7 @@ const WeDo = () => {
 
 
                     <div className="flex flex-col gap-2 md:gap-4 mt-3 2xl:w-full 2xl:pr-10">
-                        <h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>E-commerce Solution</h2>
+                        <Link href="/services"><h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>E-commerce Solution</h2></Link>
                         <p className='text-gray-500 text-sm font-lato font-normal'>We deliver tailored e-commerce solutions, offering seamless shopping experiences and robust functionality to drive your online business success.</p>
                     </div>
                 </div>
@@ -120,7 +116,7 @@ const WeDo = () => {
                     
 
                         <div className="flex flex-col gap-2 md:gap-4 mt-3 w-full 2xl:w-full 2xl:pr-8">
-                            <h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Custom Development</h2>
+                            <Link href="/services"><h2 className='font-raleway text-2xl  text-[var(--secondary)] font-semibold hover:text-[var(--primary)] duration-200'>Custom Development</h2></Link>
                             <p className='text-gray-500 text-sm font-lato font-normal'>We deliver tailored software solutions to meet your unique business needs, ensuring innovation and scalability.</p>
                         </div>
                     </div>

@@ -56,7 +56,6 @@ const HireUs = () => {
 
       <div className='justify-center text-center text-[var(--secondary)] pb-10'>
             <h2 className='text-2xl md:text-4xl text-center font-lato font-bold'><span className='text-[var(--primary)]'>Hire Us</span> with these services.</h2>
-            <p className="font-lato text-xs md:text-sm text-center">Whats happening around the world.</p>
         </div>
 
 
@@ -68,7 +67,7 @@ const HireUs = () => {
 
                        
                     {services.map((service) => (
-                        <div className="flex flex-col gap-4 min-w-[300px] max-w-[20rem] border-[1px] rounded-md drop-shadow-sm mx-auto" key={service.id}>
+                        <div className="flex flex-col gap-4 min-w-[300px] max-w-[20rem] border-[1px] rounded-md drop-shadow-sm mx-auto hover:scale-105 duration-300" key={service.id}>
                         <div className="justify-center w-full object-cover">
                             <Image src={service.image} alt={service.title} placeholder="blur" className="rounded-md"/>
                         </div>
@@ -109,8 +108,8 @@ const HireUs = () => {
             </div>
 
             <div className='text-center flex mt-10 lg:mt-14 transform hover:scale-105 duration-300 '>
-                <Link href="/services" className=' text-center font-lato px-7 py-2 mx-auto border-[var(--primary)] border-2 text-[var(--secondary)] hover:text-white duration-200 hover:bg-red-500 font-semibold justify-center rounded-md  items-center'>
-                 Explore More Projects
+                <Link href="/services" className=' text-center font-lato px-7 py-2 mx-auto border-[var(--secondary)] hover:border-[var(--primary)] border-2 text-[var(--secondary)] hover:text-white duration-200 hover:bg-red-500 font-semibold justify-center rounded-md  items-center'>
+                 Explore More services
                 </Link>
             </div>
       </div>

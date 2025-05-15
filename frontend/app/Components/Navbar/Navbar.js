@@ -57,8 +57,8 @@ const Navbar = () => {
                 </div>
                 <div>
                   <div className="flex flex-row gap-5 items-center">
-                    <Link href=""><FaFacebook className='text-lg'/></Link>
-                    <Link href=""><FaYoutube className='text-xl'/></Link>
+                    <Link href=""><FaFacebook className='text-lg hover:text-blue-500 duration-200'/></Link>
+                    <Link href=""><FaYoutube className='text-xl hover:text-red-500 duration-200'/></Link>
                     
                     
                   </div>
@@ -90,8 +90,8 @@ const Navbar = () => {
                 </ul>
               </div>
 
-              <div className="hidden md:flex bg-[var(--primary)] rounded text-white font-semibold px-5 py-2">
-                <Link href="/">Hire Us</Link>
+              <div className="bg-[var(--primary)] hover:bg-[var(--secondary)] duration-200 text-white text-sm font-poppins px-7 py-3 rounded-md cursor-pointer">
+                  <Link href="/"> <p className='justify-center items-center text-center font-semibold'>Hire Us</p></Link>
               </div>
 
               {/* Mobile menu button */}
