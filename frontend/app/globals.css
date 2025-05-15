@@ -1,0 +1,71 @@
+/* Custom fonts */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+:root {
+  --primary: #EE2B46;
+  --secondary: #132F38;
+  --third: #c9e9ff;
+}
+
+@import "tailwindcss";
+
+/* Your custom styles */
+.bg-counter {
+  background-image: url("/img/counterImg.jpg");
+}
+
+.container {
+  @apply w-[90%] md:w-[80%] max-w-[1280px] mx-auto;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+.primary {
+  color: var(--primary);
+}
+
+.secondary {
+  color: var(--secondary);
+}
+
+.third {
+  color: var(--third);
+}
+
+
+.third {
+  color: var(--third);
+}
+
+
+.border-secondary {
+  border-color: var(--secondary);
+}
+
+.border-third {
+  border-color: var(--third);
+}
+
+/* Custom font classes */
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-mont {
+  font-family: 'Montserrat', serif;
+}
+
+
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
+}
+
+.font-lato {
+  font-family: "Lato", sans-serif;
+}
