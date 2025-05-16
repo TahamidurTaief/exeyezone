@@ -25,9 +25,9 @@ const AboutHero = () => {
                   
                   
                   <div className="sm:max-w-lg">
-                    <h1 className="text-2xl font-poppins font-semibold tracking-tight text-gray-900 sm:text-4xl">Revolutionizing Connections Through Innovation</h1>
+                    <h1 className="text-2xl font-poppins font-semibold tracking-tight text-gray-900 sm:text-4xl"><span className="text-primary">Revolutionizing</span> Connections Through Innovation</h1>
                     <p className="mt-4 text-sm md:text-md xl:text-lg text-gray-500">We are a forward-thinking software company dedicated to transforming the way people connect and interact through innovative technology. Our solutions empower businesses and individuals to communicate seamlessly, collaborate efficiently, and drive meaningful digital experiences.</p>
-                    <Link href="#" className="mt-5 inline-block rounded-md border border-transparent bg-[var(--secondary)] py-3 px-8 text-center font-medium text-white hover:bg-[var(--primary)] duration-200">Contact Us</Link>
+                    <Link href="/contact" className="mt-5 inline-block rounded-md border border-transparent bg-[var(--secondary)] py-3 px-8 font-lato text-center font-medium text-white hover:bg-[var(--primary)] duration-200">Contact Us</Link>
 
                   </div>
 

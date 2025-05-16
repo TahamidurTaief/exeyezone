@@ -6,7 +6,7 @@ const TeamMember = () => {
       <section className="container bg-white relative mt-0 z-10">
         <div className="py-0 px-4 mx-auto max-w-screen-xl lg:py-0 lg:px-6 ">
             <div className="mx-auto max-w-screen-sm text-center mb-8 mt-20 lg:mb-16">
-                <h2 className="mb-4 text-4xl  font-raleway font-bold text-[var(--primary)]">Our Team</h2>
+                <h2 className="mb-4 text-4xl  font-raleway font-bold text-[var(--primary)]"><span className="text-[var(--secondary)]"> Our </span>Team</h2>
                 <p className="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-500">We are a creative team focused on bringing ideas to life through thoughtful design and meaningful digital experiences.</p>
             </div> 
             <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">

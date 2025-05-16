@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
       </Head>
 
 
-      <body>
+      <body className="min-h-[90vh]">
         <Navbar />
         {children} 
         <Footer />

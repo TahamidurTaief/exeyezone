@@ -20,9 +20,9 @@ const AboutComponentPage = () => {
       <div className=" mt-20 pb-20"> 
         <Image src={deskImg} alt="exeyezone desk" />
       </div>
-      <OurValues />
-      <Logos />
+      {/* <OurValues /> */}
       <TeamMember />
+      <Logos />
       <HireUs />
 
     </div>
