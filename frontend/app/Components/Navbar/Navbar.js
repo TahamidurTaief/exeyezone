@@ -91,7 +91,7 @@ const Navbar = () => {
               </div>
 
               <div className="bg-[var(--primary)] hover:bg-[var(--secondary)] duration-200 text-white text-sm font-poppins px-7 py-3 rounded-md cursor-pointer">
-                  <Link href="/"> <p className='justify-center items-center text-center font-semibold'>Hire Us</p></Link>
+                  <Link href="/hireus"> <p className='justify-center items-center text-center font-semibold'>Hire Us</p></Link>
               </div>
 
               {/* Mobile menu button */}
@@ -124,7 +124,7 @@ const Navbar = () => {
                     </li>
                   ))}
                   <li className="bg-[var(--third)] rounded px-5 py-2 text-center">
-                    <Link href="/" onClick={toggleMenu}>Hire Us</Link>
+                    <Link href="/hireus" onClick={toggleMenu}>Hire Us</Link>
                   </li>
                 </ul>
               </div>
