@@ -1,6 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
 import { IoCall, IoLocation } from "react-icons/io5";
 import { SiGmail } from "react-icons/si";
 
@@ -9,7 +7,7 @@ import { SiGmail } from "react-icons/si";
 const ContactFormComponents = () => {
   return (
     <div>
-        <div className="container h-full my-auto">
+        <div className="container w-full overflow-hidden">
           <div className="my-20 grid grid-cols-1 md:grid-cols-2 font-lato bg-white drop-shadow-2xl gap-10 px-6 py-10 rounded-xl">
             
             <div className="">

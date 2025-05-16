@@ -1,4 +1,4 @@
-import HireUsComponent from '../Components/HireUsComponent/HireUsComponent'
+import HireUsComponent from "../Components/HireUsComponent/HireUsComponent"
 
 const page = () => {
   return (

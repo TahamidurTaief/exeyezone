@@ -4,7 +4,7 @@ import ContactFormComponents from '../Components/ContactComponents/ContactFormCo
 
 const page = () => {
   return (
-    <div>
+    <div className='overflow-hidden'>
       {/* <Hero /> */}
       <ContactFormComponents />
     </div>

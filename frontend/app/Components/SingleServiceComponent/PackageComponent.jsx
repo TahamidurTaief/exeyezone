@@ -3,6 +3,7 @@
 import { ClockIcon, RevisionIcon } from "@/public/icons/HireUsIcons";
 import { useState } from "react";
 import Link from "next/link";
+import ServiceConfirmForm from "./ServiceConfirmForm";
 
 
 
@@ -11,6 +12,8 @@ export const PackageComponent = () => {
 
   
   const [selectedPackage, setSelectedPackage] = useState("Basic");
+  const [confirmPackage, setConfirmPackage] = useState(false);
+  
 
 
   const packages = {
@@ -94,7 +97,7 @@ export const PackageComponent = () => {
             </div>
           </div>
 
-          <div className="bg-[var(--secondary)] text-center py-3 rounded-md text-white mt-7 font-medium font-lato text-md cursor-pointer hover:bg-opacity-80">
+          <div className="bg-[var(--secondary)] text-center py-3 rounded-md text-white mt-7 font-medium font-lato text-md cursor-pointer hover:bg-opacity-80" onClick={() => setConfirmPackage(!confirmPackage)}>
             Continue
           </div>
         </div>
@@ -112,6 +115,13 @@ export const PackageComponent = () => {
           </Link>
         </div>
       </div>
+
+
+
+          {confirmPackage && (
+            <ServiceConfirmForm onClose={() => setConfirmPackage(false)} />
+          )}
+      
     </div>
   );
 };
@@ -134,7 +144,7 @@ export const PackageComponent = () => {
 
 export const MobilePackageComponent = () => {
 
-
+const [confirmPackage, setConfirmPackage] = useState(false);
 
     const packages = {
         Basic: {
@@ -219,7 +229,7 @@ export const MobilePackageComponent = () => {
           </div>
         </div>
 
-        <div className="bg-[var(--secondary)] justify-center items-center text-center py-3 rounded-md text-white mt-7 font-medium font-lato text-md cursor-pointer hover:bg-opacity-80">
+        <div  onClick={() => setConfirmPackage(!confirmPackage)} className="bg-[var(--secondary)] justify-center items-center text-center py-3 rounded-md text-white mt-7 font-medium font-lato text-md cursor-pointer hover:bg-opacity-80">
           Continue
         </div>
       </div>
@@ -236,6 +246,11 @@ export const MobilePackageComponent = () => {
           </a>
         </div>
       </div>
+
+
+      {confirmPackage && (
+            <ServiceConfirmForm onClose={() => setConfirmPackage(false)} />
+          )}
     </div>
   );
 };
