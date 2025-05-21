@@ -12,7 +12,7 @@ import php_laravel from "@/public/img/course/php_laravel.jpg";
 import python_django from "@/public/img/course/python_django.jpg";
 import Image from "next/image";
 
-const Carousel = () => {
+const Carousel = ({img}) => {
   return (
     <div className="relative w-full mt-5">
       <Swiper
@@ -26,32 +26,18 @@ const Carousel = () => {
         className="rounded-lg"
       >
         {/* Slide 1 */}
-        <SwiperSlide>
-          <div className="flex justify-center items-center h-56 md:h-96">
-            <Image src={flutter} alt="Flutter" className="rounded-xl" />
-          </div>
-        </SwiperSlide>
 
-        {/* Slide 2 */}
-        <SwiperSlide>
-          <div className="flex justify-center items-center h-56 md:h-96">
-            <Image src={mern} alt="MERN Stack" className="rounded-xl" />
-          </div>
-        </SwiperSlide>
 
-        {/* Slide 3 */}
-        <SwiperSlide>
-          <div className="flex justify-center items-center h-56 md:h-96">
-            <Image src={php_laravel} alt="PHP Laravel" className="rounded-xl" />
-          </div>
-        </SwiperSlide>
+        {img.map ((image, index) => (
+          <SwiperSlide key={index}>
+            <div className="relative flex justify-center items-center h-56 md:h-96  object-cover">
+              <Image src={image.image} alt="Flutter" fill className="rounded-xl w-full h-full  object-cover" />
+            </div>
+          </SwiperSlide>
+        ))}
+        
 
-        {/* Slide 4 */}
-        <SwiperSlide>
-          <div className="flex justify-center items-center h-56 md:h-96">
-            <Image src={python_django} alt="Python Django" className="rounded-xl" />
-          </div>
-        </SwiperSlide>
+
       </Swiper>
     </div>
   );

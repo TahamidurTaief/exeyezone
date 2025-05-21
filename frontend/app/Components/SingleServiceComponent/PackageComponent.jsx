@@ -1,256 +1,209 @@
+// components/PackageComponent.jsx
 "use client";
 
-import { ClockIcon, RevisionIcon } from "@/public/icons/HireUsIcons";
 import { useState } from "react";
 import Link from "next/link";
+import { ClockIcon, RevisionIcon } from "@/public/icons/HireUsIcons";
 import ServiceConfirmForm from "./ServiceConfirmForm";
 
+function buildLookup(arr) {
+  // e.g. { Basic: { … }, Custom: { … }, Premium: { … } }
+  return arr.reduce((map, item) => {
+    map[item.package_type] = {
+      title: `${item.package_type} Package`,
+      price: `$${item.price}`,
+      description: item.description,
+      delivery: `${item.delivery_time} Days Delivery`,
+      revision: `${item.revision_count} Times Revision`,
+    };
+    return map;
+  }, {});
+}
 
 
-export const PackageComponent = () => {
 
 
-  
+export const PackageComponent = ({ pkg, service }) => {
   const [selectedPackage, setSelectedPackage] = useState("Basic");
   const [confirmPackage, setConfirmPackage] = useState(false);
-  
 
+  if (!Array.isArray(pkg) || pkg.length === 0) {
+    return <p className="text-red-600">No package data available.</p>;
+  }
 
-  const packages = {
-    Basic: {
-      title: "Basic Package",
-      price: "$66",
-      description:
-        "Includes Complex Python project with source code, project workflow, and detailed description.",
-      delivery: "7 Days Delivery",
-      revision: "5 Times Revision",
-    },
-    Standard: {
-      title: "Standard Package",
-      price: "$99",
-      description:
-        "Includes Advanced Python project with documentation and additional support.",
-      delivery: "5 Days Delivery",
-      revision: "8 Times Revision",
-    },
-    Premium: {
-      title: "Premium Package",
-      price: "$149",
-      description:
-        "Includes Full Python project, documentation, priority support, and extra features.",
-      delivery: "3 Days Delivery",
-      revision: "Unlimited Revisions",
-    },
-  };
-  
+  const lookup = buildLookup(pkg);
 
   return (
     <div className="w-full h-auto lg:w-[40%] 2xl:w-[35%] hidden lg:block">
-      <div className="h-auto border-[1px] border-gray-400 p-5 rounded-lg">
-        {/* Package Selection Buttons */}
+      <div className="h-auto border border-gray-400 p-5 rounded-lg">
+        {/* Buttons */}
         <div className="flex flex-row gap-5">
-          {Object.keys(packages).map((pkg) => (
+          {Object.keys(lookup).map((key) => (
             <button
-              key={pkg}
-              className={`w-1/3 py-3 rounded-sm text-center border-[1px] font-poppins font-normal transition duration-300 
-                ${
-                  selectedPackage === pkg
-                    ? "border-[var(--primary)] shadow-md scale-105 text-[var(--primary)]"
-                    : "border-gray-500 bg-white"
-                }
-                hover:border-[var(--primary)] hover:shadow-md hover:scale-105`}
-              onClick={() => setSelectedPackage(pkg)}
+              key={key}
+              className={`w-1/3 py-3 rounded-sm text-center border font-poppins transition duration-300 ${
+                selectedPackage === key
+                  ? "border-[var(--primary)] shadow-md scale-105 text-[var(--primary)]"
+                  : "border-gray-500 bg-white"
+              } hover:border-[var(--primary)] hover:shadow-md hover:scale-105`}
+              onClick={() => setSelectedPackage(key)}
             >
-              {pkg}
+              {key}
             </button>
           ))}
         </div>
 
         <hr className="mt-7" />
 
-        {/* Package Content (Changes Based on Selection) */}
+        {/* Content */}
         <div className="mt-7">
-          <div className="flex flex-row justify-between">
+          <div className="flex justify-between">
             <h5 className="font-lato font-semibold">
-              {packages[selectedPackage].title}
+              {lookup[selectedPackage].title}
             </h5>
-            <h5 className="text-xl font-semibold font-raleway">
-              {packages[selectedPackage].price}
+            <h5 className="text-xl font-semibold font-lato">
+              {lookup[selectedPackage].price}
             </h5>
           </div>
 
-          <p className="font-lato mt-3">{packages[selectedPackage].description}</p>
+          <p className="font-lato mt-3">
+            {lookup[selectedPackage].description}
+          </p>
 
-          <div className="flex flex-row justify-between mt-6">
-            <div className="flex flex-row items-center gap-1">
+          <div className="flex justify-between mt-6">
+            <div className="flex items-center gap-1">
               <ClockIcon />
               <span className="font-semibold text-gray-800">
-                {packages[selectedPackage].delivery}
+                {lookup[selectedPackage].delivery}
               </span>
             </div>
-
-            <div className="flex flex-row items-center gap-1">
+            <div className="flex items-center gap-1">
               <RevisionIcon />
               <span className="font-semibold text-gray-800">
-                {packages[selectedPackage].revision}
+                {lookup[selectedPackage].revision}
               </span>
             </div>
           </div>
 
-          <div className="bg-[var(--secondary)] text-center py-3 rounded-md text-white mt-7 font-medium font-lato text-md cursor-pointer hover:bg-opacity-80" onClick={() => setConfirmPackage(!confirmPackage)}>
+          <div
+            className="bg-[var(--secondary)] text-center py-3 rounded-md text-white mt-7 font-medium font-lato text-md cursor-pointer hover:bg-opacity-80"
+            onClick={() => setConfirmPackage(true)}
+          >
             Continue
           </div>
         </div>
       </div>
 
-      {/* Quote Section */}
-      <div className="h-auto border-[0px] border-gray-400 p-5 rounded-lg mt-7 bg-gray-100">
-        <h1 className="text-md font-lato font-medium text-center justify-center text-gray-700">
+      {/* Quote Box */}
+      <div className="border-0 bg-gray-100 p-5 rounded-lg mt-7">
+        <h1 className="text-md font-lato font-medium text-center text-gray-700">
           Do you have any special requirements?
         </h1>
-
-        <div className="justify-center mx-auto mt-3 flex">
-          <Link href="/getquote" className="uppercase font-raleway font-medium text-center justify-center mx-auto rounded-md bg-white hover:bg-[var(--primary)] hover:shadow-md hover:text-white duration-200 border-[1px] py-2 px-4 cursor-pointer">
+        <div className="flex justify-center mt-3">
+          <Link
+            href="/getquote"
+            className="uppercase font-raleway font-medium bg-white hover:bg-[var(--primary)] hover:text-white duration-200 border py-2 px-4 rounded-md"
+          >
             Get a Quote
           </Link>
         </div>
       </div>
 
-
-
-          {confirmPackage && (
-            <ServiceConfirmForm onClose={() => setConfirmPackage(false)} />
-          )}
-      
+      {/* Modal */}
+      {confirmPackage && (
+        <ServiceConfirmForm onClose={() => setConfirmPackage(false)} pkg={lookup[selectedPackage].title} service={service} />
+      )}
     </div>
   );
 };
 
-
-
-
-
-
-
-
-
-
-
-// MOBILE SECTION
-
-
-
-
-
-export const MobilePackageComponent = () => {
-
-const [confirmPackage, setConfirmPackage] = useState(false);
-
-    const packages = {
-        Basic: {
-          title: "Basic Package",
-          price: "$66",
-          description:
-            "Includes Complex Python project with source code, project workflow, and detailed description.",
-          delivery: "7 Days Delivery",
-          revision: "5 Times Revision",
-        },
-        Standard: {
-          title: "Standard Package",
-          price: "$99",
-          description:
-            "Includes Advanced Python project with documentation and additional support.",
-          delivery: "5 Days Delivery",
-          revision: "8 Times Revision",
-        },
-        Premium: {
-          title: "Premium Package",
-          price: "$149",
-          description:
-            "Includes Full Python project, documentation, priority support, and extra features.",
-          delivery: "3 Days Delivery",
-          revision: "Unlimited Revisions",
-        },
-      };
-
-
-
+export const MobilePackageComponent = ({ pkg, service }) => {
   const [selectedPackage, setSelectedPackage] = useState("Basic");
+  const [confirmPackage, setConfirmPackage] = useState(false);
+
+  if (!Array.isArray(pkg) || pkg.length === 0) {
+    return <p className="text-red-600">No package data available.</p>;
+  }
+
+  const lookup = buildLookup(pkg);
 
   return (
-    <div className="lg:hidden mt-10 w-full lg:w-1/3">
-      <div className="h-auto border-[1px] border-gray-400 p-5 rounded-lg">
-        {/* Package Selection Buttons */}
+    <div className="lg:hidden mt-10 w-full">
+      <div className="border border-gray-400 p-5 rounded-lg">
+        {/* Buttons */}
         <div className="flex flex-row gap-5">
-          {Object.keys(packages).map((pkg) => (
+          {Object.keys(lookup).map((key) => (
             <button
-              key={pkg}
-              className={`w-1/3 py-3 rounded-sm text-center border-[1px] font-poppins font-normal transition duration-300 
-              ${
-                selectedPackage === pkg
+              key={key}
+              className={`w-1/3 py-3 rounded-sm text-center border font-poppins transition duration-300 ${
+                selectedPackage === key
                   ? "border-[var(--primary)] shadow-md scale-105 text-[var(--primary)]"
                   : "border-gray-500 bg-white"
-              }
-              hover:border-[var(--primary)] hover:shadow-md hover:scale-105`}
-              onClick={() => setSelectedPackage(pkg)}
+              } hover:border-[var(--primary)] hover:shadow-md hover:scale-105`}
+              onClick={() => setSelectedPackage(key)}
             >
-              {pkg}
+              {key}
             </button>
           ))}
         </div>
 
         <hr className="mt-7" />
 
-        {/* Package Content (Changes Based on Selection) */}
-        <div className="flex flex-row justify-between mt-7">
+        {/* Content */}
+        <div className="flex justify-between mt-7">
           <h5 className="font-lato font-semibold">
-            {packages[selectedPackage].title}
+            {lookup[selectedPackage].title}
           </h5>
           <h5 className="text-xl font-semibold font-lato">
-            {packages[selectedPackage].price}
+            {lookup[selectedPackage].price}
           </h5>
         </div>
 
-        <p className="font-lato text-sm md:text-md mt-3">{packages[selectedPackage].description}</p>
+        <p className="font-lato text-sm md:text-md mt-3">
+          {lookup[selectedPackage].description}
+        </p>
 
-        <div className="flex flex-row justify-between mt-6">
-          <div className="flex flex-row items-center gap-1">
+        <div className="flex justify-between mt-6">
+          <div className="flex items-center gap-1">
             <ClockIcon className="w-5 h-5 text-gray-600" />
             <span className="text-sm md:text-md font-semibold text-gray-800">
-              {packages[selectedPackage].delivery}
+              {lookup[selectedPackage].delivery}
             </span>
           </div>
-
-          <div className="flex flex-row items-center gap-1">
+          <div className="flex items-center gap-1">
             <RevisionIcon className="w-5 h-5 text-gray-600" />
             <span className="text-sm md:text-md font-semibold text-gray-800">
-              {packages[selectedPackage].revision}
+              {lookup[selectedPackage].revision}
             </span>
           </div>
         </div>
 
-        <div  onClick={() => setConfirmPackage(!confirmPackage)} className="bg-[var(--secondary)] justify-center items-center text-center py-3 rounded-md text-white mt-7 font-medium font-lato text-md cursor-pointer hover:bg-opacity-80">
+        <div
+          onClick={() => setConfirmPackage(true)}
+          className="bg-[var(--secondary)] text-center py-3 rounded-md text-white mt-7 font-medium font-lato text-md cursor-pointer hover:bg-opacity-80"
+        >
           Continue
         </div>
       </div>
 
-      {/* Quote Section */}
-      <div className="h-auto border-[0px] border-gray-400 p-5 rounded-lg mt-7 bg-gray-100">
+      {/* Quote Box */}
+      <div className="bg-gray-100 p-5 rounded-lg mt-7">
         <h1 className="text-md font-lato font-medium text-center text-gray-700">
           Do you have any special requirements?
         </h1>
-
-        <div className="justify-center mx-auto mt-3 flex">
-          <a className="uppercase font-raleway font-medium text-center mx-auto rounded-md bg-white hover:bg-[var(--primary)] hover:shadow-md hover:text-white duration-200 border-[1px] py-2 px-4 cursor-pointer">
+        <div className="flex justify-center mt-3">
+          <Link
+            href="/getquote"
+            className="uppercase font-raleway font-medium bg-white hover:bg-[var(--primary)] hover:text-white duration-200 border py-2 px-4 rounded-md"
+          >
             Get a Quote
-          </a>
+          </Link>
         </div>
       </div>
 
-
       {confirmPackage && (
-            <ServiceConfirmForm onClose={() => setConfirmPackage(false)} />
-          )}
+        <ServiceConfirmForm onClose={() => setConfirmPackage(false)} pkg={lookup[selectedPackage].title} service={service} />
+      )}
     </div>
   );
 };

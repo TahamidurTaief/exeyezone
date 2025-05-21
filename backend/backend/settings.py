@@ -23,6 +23,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'api',
+    "ckeditor", 
+    "ckeditor_uploader",
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -35,6 +38,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
+
+
 
 
 CORS_ALLOW_ALL_ORIGINS = True 
@@ -111,6 +116,19 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"  # inside MEDIA_ROOT
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "full",
+        "height": 300,
+        "width": "100%",
+    },
+}
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -121,4 +139,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 UNFOLD = {
     "SITE_TITLE": "Dashboard",
     "SITE_HEADER": "exeyezone",
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }

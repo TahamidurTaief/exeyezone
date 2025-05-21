@@ -1,28 +1,49 @@
 from django.contrib import admin
+from django.db import models
 from unfold.admin import ModelAdmin
-from .models import (
-    Tag, Product, Course, Service,
-    ServiceImage, ServicePackage,
-    TeamMember, Blog
-)
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-# Inline for ServiceImage
+
+
+from .models import *
+
+
 class ServiceImageInline(admin.TabularInline):
     model = ServiceImage
     extra = 1
 
-
-# Inline for ServicePackage
 class ServicePackageInline(admin.TabularInline):
     model = ServicePackage
     extra = 3
     max_num = 3
 
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(ModelAdmin):
+    list_display = ('name',)  # Replace 'name' with actual field(s) from your model
+
+
+@admin.register(ServiceCategory)
+class ServiceCategoryAdmin(ModelAdmin):
+    list_display = ('name',)
+
+
+@admin.register(CourseCategory)
+class CourseCategoryAdmin(ModelAdmin):
+    list_display = ('name',)
+
+
+    
 
 @admin.register(Service)
-class ServiceAdmin(ModelAdmin):
+class ServiceAdmin(admin.ModelAdmin):
     list_display = ('title', 'rating', 'purchase_number', 'delivery_title')
     inlines = [ServiceImageInline, ServicePackageInline]
+
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorUploadingWidget},
+    }
+
+
 
 
 @admin.register(ServiceImage)

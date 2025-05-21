@@ -110,7 +110,10 @@ const HomePage = async () => {
         </div>
 
         <LatestProject product={product}/>
-        <Course courses={courses}/>
+        <div className="bg-gray-100 py-20">
+          <Course courses={courses}/>
+        </div>
+        
         <HireUs services={services}/>
         {/* <Different /> */}
         <RatingDevider />

@@ -1,5 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { FaFacebook, FaGithub, FaLinkedin  } from "react-icons/fa";
+import { RiGlobalFill } from "react-icons/ri";
+
+
+
 
 const TeamMember = ({ team }) => {
   return (
@@ -38,11 +44,30 @@ const TeamMember = ({ team }) => {
                   <ul className="flex space-x-4">
                     {data.facebook && (
                       <li>
-                        <a href={data.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-900">
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 ..."/>
-                          </svg>
-                        </a>
+                        <Link href={data.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-900">
+                          <FaFacebook  className='hover:text-blue-500 duration-200'/>
+                        </Link>
+                      </li>
+                    )}
+                    {data.linkedin && (
+                      <li>
+                        <Link href={data.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-900">
+                          <FaLinkedin  className='hover:text-blue-600 duration-200'/>
+                        </Link>
+                      </li>
+                    )}
+                    {data.github && (
+                      <li>
+                        <Link href={data.github} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-900">
+                          <FaGithub  className='hover:text-gray-900 duration-200'/>
+                        </Link>
+                      </li>
+                    )}
+                    {data.personal_website && (
+                      <li>
+                        <Link href={data.personal_website} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-900">
+                          <RiGlobalFill   className='hover:text-red-500 duration-200'/>
+                        </Link>
                       </li>
                     )}
                     {/* Add other social links here as needed: data.twitter, data.linkedin, etc. */}
@@ -51,6 +76,11 @@ const TeamMember = ({ team }) => {
               </div>
             ))}
           </div>
+
+
+          
+
+
 
         </div>
       </section>

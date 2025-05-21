@@ -36,7 +36,7 @@ const HireUs = ({ services }) => {
               </div>
               <div className="flex flex-col gap-3 px-4">
                 <div>
-                  <Link href="">
+                  <Link href={`/services/${service.id}/`} className="flex flex-row gap-2 items-center">
                     <h1 className="text-sm md:text-[16px] leading-5 font-lato font-medium hover:text-[var(--primary)] duration-200 justify-start">
                       {service.title}
                     </h1>
@@ -68,7 +68,7 @@ const HireUs = ({ services }) => {
                   </div>
 
                   <Link
-                    href="/hireus"
+                    href={`/services/${service.id}/`}
                     className="bg-[var(--secondary)] hover:bg-[var(--primary)] font-lato text-sm uppercase text-white duration-200 px-3 py-2 text-center rounded-md"
                   >
                     See Details

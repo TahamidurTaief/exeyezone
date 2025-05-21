@@ -1,5 +1,36 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
+
+
+class ProductCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ServiceCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class CourseCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    total_courses = models.IntegerField(default=0)
+    total_students = models.IntegerField(default=0)
+    total_instructors = models.IntegerField(default=0)
+    total_reviews = models.IntegerField(default=0)
+    total_rating = models.FloatField(default=0)
+
+
+    def __str__(self):
+        return self.name
+    
+
+    
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -11,8 +42,13 @@ class Tag(models.Model):
 class Product(models.Model):
     product_img = models.ImageField(upload_to='products/')
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
+    category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    sales_count = models.PositiveIntegerField(default=0)
+    rating = models.DecimalField(max_digits=3, decimal_places=1, default=0)
+    demo = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -30,6 +66,7 @@ class Course(models.Model):
     img = models.ImageField(upload_to='courses/')
     title = models.CharField(max_length=200)
     description = models.TextField()
+    category = models.ForeignKey(CourseCategory, on_delete=models.SET_NULL, null=True, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
     course_type = models.CharField(max_length=20, choices=COURSE_TYPE_CHOICES)
     deadline = models.DateField()
@@ -43,6 +80,8 @@ class Course(models.Model):
 
 class Service(models.Model):
     title = models.CharField(max_length=200)
+    description = RichTextField(blank=True, default="")
+    category = models.ForeignKey(ServiceCategory, on_delete=models.SET_NULL, null=True, blank=True)
     rating = models.FloatField(default=0)
     purchase_number = models.PositiveIntegerField(default=0)
     delivery_title = models.CharField(max_length=255)
@@ -62,7 +101,7 @@ class ServiceImage(models.Model):
 class ServicePackage(models.Model):
     PACKAGE_CHOICES = [
         ('Basic', 'Basic'),
-        ('Custom', 'Custom'),
+        ('Standard', 'Standard'),
         ('Premium', 'Premium'),
     ]
 
@@ -87,7 +126,7 @@ class TeamMember(models.Model):
     position = models.CharField(max_length=100)
     description = models.TextField()
     facebook = models.URLField(blank=True)
-    twitter = models.URLField(blank=True)
+    linkedin = models.URLField(blank=True)
     github = models.URLField(blank=True)
     personal_website = models.URLField(blank=True)
 
