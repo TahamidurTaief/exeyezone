@@ -16,7 +16,7 @@ async function getCategories() {
 
 export default async function Page({ searchParams }) {
   // Destructure after awaiting
-  const { category } = searchParams;
+  const { category } = await searchParams;
   const products = await getProducts(category);
   const categories = await getCategories();
 

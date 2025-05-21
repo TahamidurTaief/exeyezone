@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const ProductComponent = ({ products }) => {
   return (
-    <div className="container mt-20 pb-20">
+    <div className="container mt-10 pb-20">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 sm:gap-4 lg:gap-6 mx-auto justify-center">
         {products.map((product, index) => (
           <div className="p-2 bg-[#F5F7F9] min-w-[300px] max-w-[336px] pb-4 rounded-xl hover:shadow-lg duration-200" key={index}>

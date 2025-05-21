@@ -1,4 +1,3 @@
-import { SearchIcon } from "@/public/icons/ProductsIcons";
 import { ProductLottieAnimation } from "@/public/lottie/LottieAnimation";
 import Link from "next/link";
 
@@ -54,17 +53,7 @@ const Hero = () => {
 
 
 
-            <div className="flex flex-row mt-5 items-center gap-3 border-[1px] border-third rounded-full py-2 px-5 justify-between">
-              <input
-                type="text"
-                className="text-gray-600 focus:ring-0 focus:border-transparent  focus:outline-none active:ring-0 text-[15px] rounded-md px-3 py-2"
-                placeholder="Search by category"
-              />
-              <button className="bg-[var(--third)] p-3 hover:bg-sky-200 rounded-full duration-200">
-                <SearchIcon />
-              </button>
-              
-            </div>
+
           </div>
 
           {/* RIGHT SIDE END HERE */}

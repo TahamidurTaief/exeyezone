@@ -41,7 +41,7 @@ const Navbar = () => {
       <nav>
         {/* Top contact info bar */}
         <div className='bg-[var(--secondary)] py-1 w-full hidden md:block'>
-          <div className='container'>
+          <div className='container relative'>
             <div className='text-white font-poppins font-medium text-sm items-center justify-center text-center'>
               <div className="flex flex-row justify-between">
                 <div className="flex flex-row gap-7 w-full">
@@ -77,7 +77,7 @@ const Navbar = () => {
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden md:flex">
+              <div className="hidden lg:flex">
                 <ul className="flex flex-row text-sm font-normal text-gray-800  gap-6 font-poppins items-center">
                   {navLinks.map((link) => (
                     <li 
@@ -97,7 +97,7 @@ const Navbar = () => {
               
 
               {/* Mobile menu button */}
-              <div className="md:hidden flex items-center bg-[var(--third)] p-1 rounded-md">
+              <div className="lg:hidden flex items-center bg-[var(--third)] p-1 rounded-md">
                 <button
                   onClick={toggleMenu}
                   className="text-gray-800 focus:outline-none cursor-pointer"
@@ -110,7 +110,8 @@ const Navbar = () => {
 
             {/* Mobile menu */}
             {isMenuOpen && (
-              <div className="md:hidden bg-white drop-shadow-lg rounded-lg mt-2">
+              <div className=" absolute min-w-48 right-5 lg:hidden bg-white drop-shadow-lg rounded-lg mt-2">
+                <div className="flex flex-col justify-between h-ful">
                 <ul className="flex flex-col text-sm font-normal text-gray-800 gap-4 font-poppins p-4">
                   {navLinks.map((link) => (
                     <li 
@@ -124,11 +125,16 @@ const Navbar = () => {
                         {link.text}
                       </Link>
                     </li>
+                    
                   ))}
-                  <li className="bg-[var(--primary)] hover:bg-[var(--secondary)] active:bg-[var(--secondary)] rounded px-5 py-2 text-center">
-                    <Link href="/hireus" className='justify-center items-center text-center font-semibold text-white' onClick={toggleMenu}>Hire Us</Link>
-                  </li>
+                  <li className="bg-[var(--primary)] w-full hover:bg-[var(--secondary)] active:bg-[var(--secondary)] rounded px-5 py-2 text-center">
+                      <Link href="/hireus" className='justify-center items-center text-center font-semibold text-white' onClick={toggleMenu}>Hire Us</Link>
+                    </li>
                 </ul>
+                
+                
+
+                </div>
               </div>
             )}
           </div>

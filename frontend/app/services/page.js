@@ -3,7 +3,7 @@ import ServiceCard from '../Components/ServicesComponent/ServiceCard/ServiceCard
 
 const page = () => {
   return (
-    <div className='pt-32 pb-20 container '>
+    <div className='pt-5 pb-20 container '>
       <HeroComponents />
       <ServiceCard />
     </div>

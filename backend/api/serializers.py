@@ -70,3 +70,40 @@ class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields = '__all__'
+
+
+
+class ServiceOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceOrder
+        fields = '__all__'
+        read_only_fields = ('status', 'created_at', 'updated_at')
+
+
+
+class QuoteRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuoteRequest
+        fields = '__all__'
+        read_only_fields = ('status', 'created_at', 'updated_at')
+
+
+
+class HireRequestSerializer(serializers.ModelSerializer):
+    service_title = serializers.CharField(source='service.title', read_only=True)
+    package_details = serializers.SerializerMethodField()
+
+    class Meta:
+        model = HireRequest
+        fields = '__all__'
+        read_only_fields = ('status', 'created_at', 'updated_at')
+
+    def get_package_details(self, obj):
+        if obj.package:
+            return {
+                'package_type': obj.package.package_type,
+                'price': str(obj.package.price),
+                'delivery_time': obj.package.delivery_time,
+                'revision_count': obj.package.revision_count
+            }
+        return None

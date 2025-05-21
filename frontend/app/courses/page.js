@@ -72,7 +72,7 @@ const CoursePage = async ({ searchParams }) => {
   }
 
   return (
-    <div className="pt-32 pb-20">
+    <div className="pt-2 pb-20">
       <div className="container">
         <Hero />
         <div className="justify-center text-center mt-10">

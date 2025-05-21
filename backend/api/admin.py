@@ -90,3 +90,38 @@ class BlogAdmin(ModelAdmin):
     list_display = ('title', 'author', 'created_at', 'updated_at')
     search_fields = ('title', 'author', 'content')
     prepopulated_fields = {"slug": ("title",)}
+
+
+@admin.register(ServiceOrder)
+class ServiceOrderAdmin(ModelAdmin):
+    list_display = ('service_title', 'package_type', 'full_name', 'email')
+    list_filter = ('status',)
+    search_fields = ('service_title', 'full_name')
+    readonly_fields = ('created_at', 'updated_at')
+
+
+
+@admin.register(QuoteRequest)
+class QuoteRequestAdmin(ModelAdmin):
+    list_display = ('name', 'email', 'description', 'status')
+    list_filter = ('name','email', 'status')
+    search_fields = ('name', 'email')
+    readonly_fields = ('created_at', 'updated_at')
+
+
+
+@admin.register(HireRequest)
+class HireRequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'email', 'service_title', 'package_type', 'status', 'created_at')
+    list_filter = ('status', 'created_at')
+    search_fields = ('name', 'email', 'service__title')
+    readonly_fields = ('created_at', 'updated_at')
+    list_per_page = 20
+    
+    def service_title(self, obj):
+        return obj.service.title if obj.service else '-'
+    service_title.short_description = 'Service'
+    
+    def package_type(self, obj):
+        return obj.package.package_type if obj.package else '-'
+    package_type.short_description = 'Package'

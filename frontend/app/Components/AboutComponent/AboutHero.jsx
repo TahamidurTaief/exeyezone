@@ -20,7 +20,7 @@ const AboutHero = () => {
         <div className="container">
             
           <div className="relative md:overflow-hidden bg-white max-h-screen">
-              <div className="pt-0  sm:pt-24  lg:pt-40 ">
+              <div className="pt-0  sm:pt-2  lg:pt-40 ">
                 <div className="flex flex-col gap-6 lg:flex-row mx-auto max-w-7xl">
                   
                   

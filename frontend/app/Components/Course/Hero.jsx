@@ -27,7 +27,7 @@ const Hero = () => {
               </p>
             </div>
 
-              <div className="flex flex-row mt-5 gap-7 items-center">
+            <div className="flex flex-row mt-5 gap-7 items-center">
                             <div className="bg-[var(--primary)] hover:bg-[var(--secondary)] duration-200 text-white text-sm font-poppins px-7 py-3 rounded-md cursor-pointer">
                                 <Link href="/"> <p className='justify-center items-center text-center font-semibold'>Contact Now</p></Link>
                             </div>
@@ -50,21 +50,6 @@ const Hero = () => {
                             </div>
                             
                         </div>
-
-
-
-
-            <div className="flex flex-row mt-5 items-center gap-3 border-[1px] border-third rounded-full py-2 px-5 justify-between">
-              <input
-                type="text"
-                className="text-gray-600 focus:ring-0 focus:border-transparent  focus:outline-none active:ring-0 text-[15px] rounded-md px-3 py-2"
-                placeholder="Search by category"
-              />
-              <button className="bg-[var(--third)] p-3 hover:bg-sky-200 rounded-full duration-200">
-                <SearchIcon />
-              </button>
-              
-            </div>
           </div>
 
           {/* RIGHT SIDE END HERE */}

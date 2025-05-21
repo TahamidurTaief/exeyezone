@@ -147,3 +147,73 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+
+
+class ServiceOrder(models.Model):
+    SERVICE_STATUS = [
+        ('pending', 'Pending'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    contact_number = models.CharField(max_length=20)
+    message = models.TextField(blank=True, null=True)
+    service_title = models.CharField(max_length=200)
+    package_type = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=SERVICE_STATUS, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Order #{self.id} - {self.service_title} ({self.package_type})"
+
+
+
+class QuoteRequest(models.Model):
+    QUOTE_STATUS = [
+        ('pending', 'Pending'),
+        ('reviewed', 'Reviewed'),
+        ('quoted', 'Quoted'),
+        ('rejected', 'Rejected'),
+    ]
+
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    contact_number = models.CharField(max_length=20)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=QUOTE_STATUS, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Quote #{self.id} - {self.name}"
+    
+
+
+
+class HireRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('rejected', 'Rejected'),
+    ]
+
+    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True)
+    package = models.ForeignKey(ServicePackage, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    contact_number = models.CharField(max_length=20)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Hire Request #{self.id} - {self.name}"

@@ -66,7 +66,7 @@ const AboutComponentPage = async () => {
 
 
   return (
-    <div className="  pb-20 ">
+    <div className=" pb-20 ">
       <AboutHero />
       <Mission />
       <div className=" mt-20 pb-20"> 

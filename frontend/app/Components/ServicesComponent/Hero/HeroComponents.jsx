@@ -50,21 +50,6 @@ const HeroComponents = () => {
                             </div>
                             
                         </div>
-
-
-
-
-            <div className="flex flex-row mt-5 items-center gap-3 border-[1px] border-third hover:border-sky-300 rounded-full py-2 px-5 justify-between">
-              <input
-                type="text"
-                className="text-gray-600 focus:ring-0 focus:border-transparent  focus:outline-none active:ring-0 text-[15px] rounded-md px-3 py-2"
-                placeholder="Search your services"
-              />
-              <button className="bg-[var(--third)] p-3 hover:bg-sky-300 rounded-full duration-200">
-                <SearchIcon />
-              </button>
-              
-            </div>
           </div>
 
           {/* RIGHT SIDE END HERE */}
