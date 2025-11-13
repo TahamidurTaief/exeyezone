@@ -1,4 +1,4 @@
-import ProductPage from '@/app/components/Products/ProductPage';
+import ProductPage from '@/app/Components/Products/ProductPage';
 
 async function getProducts(category = null) {
   let url = `${process.env.NEXT_PUBLIC_API_URL}/products/`;

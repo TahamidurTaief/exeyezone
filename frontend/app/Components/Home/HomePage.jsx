@@ -31,9 +31,9 @@ const LatestProjectData = async () => {
 const CourseData = async () => {
         try{
         const res = await api.get('/courses/');
-        return res.data.slice(0, 3);
+        return res.data.slice(0, 8); // Get 8 courses for 2 rows (4 on 2xl)
     }catch (error) {
-        console.error('Error fetching product data:', error);
+        console.error('Error fetching course data:', error);
         return [];
     }
 
@@ -48,7 +48,7 @@ const ServicesData = async () => {
       throw new Error("API did not return an array");
     }
 
-    const services = data.map((service) => {
+    const services = data.slice(0, 8).map((service) => { // Get 8 services for 2 rows (4 on 2xl)
       const firstImage = service.service_images.length > 0 ? service.service_images[0].image : null;
       const basicPackage = service.service_packages.find(pkg => pkg.package_type === "Basic") || service.service_packages[0] || {};
 

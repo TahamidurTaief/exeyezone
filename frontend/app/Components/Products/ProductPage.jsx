@@ -1,5 +1,5 @@
 
-import Hero from "@/app/components/Products/Hero/Hero";
+import Hero from "@/app/Components/Products/Hero/Hero";
 import ProductComponent from "./Product/ProductComponent";
 import HireUs from "../Home/HireUs/HireUs";
 import CategoryComponents from "./Category/CategoryComponents";

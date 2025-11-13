@@ -3,7 +3,7 @@ import React from 'react';
 import api from "@/utils/axios"; 
 
 export default async function ServicePage({ params }) {
-  const {id} = params;
+  const {id} = await params;
   
   try{
     const res = await api.get(`/services/${id}/`);

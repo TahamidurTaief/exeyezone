@@ -20,6 +20,12 @@ class ProductCategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class ServiceCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceCategory
+        fields = ['id', 'name']
+
+
 class ProductSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
     category = CourseCategorySerializer(read_only=True)
