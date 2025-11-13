@@ -26,13 +26,70 @@ class ServiceCategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class ProductFeaturedImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = ProductFeaturedImage
+        fields = ['id', 'image', 'order']
+    
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            if request is not None:
+                return request.build_absolute_uri(obj.image.url)
+            return obj.image.url
+        return None
+
+
+class ProductFeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductFeature
+        fields = ['id', 'name', 'icon', 'order']
+
+
+class ProductScreenshotSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = ProductScreenshot
+        fields = ['id', 'image', 'title', 'screen_type', 'link', 'order']
+    
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            if request is not None:
+                return request.build_absolute_uri(obj.image.url)
+            return obj.image.url
+        return None
+
+
+class ProductTechnologySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductTechnology
+        fields = ['id', 'name', 'icon', 'order']
+
+
 class ProductSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
-    category = CourseCategorySerializer(read_only=True)
+    category = ProductCategorySerializer(read_only=True)
+    featured_images = ProductFeaturedImageSerializer(many=True, read_only=True)
+    features = ProductFeatureSerializer(many=True, read_only=True)
+    screenshots = ProductScreenshotSerializer(many=True, read_only=True)
+    technologies = ProductTechnologySerializer(many=True, read_only=True)
+    product_img = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = '__all__'
+    
+    def get_product_img(self, obj):
+        request = self.context.get('request')
+        if obj.product_img and hasattr(obj.product_img, 'url'):
+            if request is not None:
+                return request.build_absolute_uri(obj.product_img.url)
+            return obj.product_img.url
+        return None
 
 
 class CourseSerializer(serializers.ModelSerializer):

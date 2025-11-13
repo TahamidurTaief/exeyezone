@@ -11,13 +11,22 @@ from rest_framework import status
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all().select_related('category').prefetch_related('tags')
+    queryset = Product.objects.all().select_related('category').prefetch_related(
+        'tags', 'featured_images', 'features', 'screenshots', 'technologies'
+    )
     serializer_class = ProductSerializer
+    # allow lookups by slug in URLs (e.g. /products/<slug>/)
+    lookup_field = 'slug'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = {
         'category': ['exact'],
     }
     search_fields = ['title', 'description', 'category__name', 'tags__name']
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 
 class ProductCategoryViewSet(viewsets.ModelViewSet):

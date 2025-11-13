@@ -57,12 +57,55 @@ class ServicePackageAdmin(ModelAdmin):
     list_filter = ('package_type',)
 
 
+class ProductFeaturedImageInline(admin.TabularInline):
+    model = ProductFeaturedImage
+    extra = 3
+
+class ProductFeatureInline(admin.TabularInline):
+    model = ProductFeature
+    extra = 5
+
+class ProductScreenshotInline(admin.TabularInline):
+    model = ProductScreenshot
+    extra = 3
+
+class ProductTechnologyInline(admin.TabularInline):
+    model = ProductTechnology
+    extra = 5
+
+
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
-    list_display = ('title', 'created_at', 'updated_at')
-    list_filter = ('created_at', 'updated_at')
+    list_display = ('title', 'slug', 'price', 'rating', 'sales_count', 'created_at')
+    prepopulated_fields = {"slug": ("title",)}
+    list_filter = ('created_at', 'updated_at', 'category')
     search_fields = ('title', 'description')
     filter_horizontal = ('tags',)
+    inlines = [ProductFeaturedImageInline, ProductFeatureInline, ProductScreenshotInline, ProductTechnologyInline]
+
+
+@admin.register(ProductFeaturedImage)
+class ProductFeaturedImageAdmin(ModelAdmin):
+    list_display = ('product', 'order')
+    list_filter = ('product',)
+
+
+@admin.register(ProductFeature)
+class ProductFeatureAdmin(ModelAdmin):
+    list_display = ('product', 'name', 'order')
+    list_filter = ('product',)
+
+
+@admin.register(ProductScreenshot)
+class ProductScreenshotAdmin(ModelAdmin):
+    list_display = ('product', 'title', 'screen_type', 'order')
+    list_filter = ('product', 'screen_type')
+
+
+@admin.register(ProductTechnology)
+class ProductTechnologyAdmin(ModelAdmin):
+    list_display = ('product', 'name', 'order')
+    list_filter = ('product',)
 
 
 @admin.register(Course)
@@ -103,10 +146,14 @@ class ServiceOrderAdmin(ModelAdmin):
 
 @admin.register(QuoteRequest)
 class QuoteRequestAdmin(ModelAdmin):
-    list_display = ('name', 'email', 'description', 'status')
-    list_filter = ('name','email', 'status')
-    search_fields = ('name', 'email')
+    list_display = ('name', 'email', 'product', 'status', 'created_at')
+    list_filter = ('status', 'product', 'created_at')
+    search_fields = ('name', 'email', 'product__title')
     readonly_fields = ('created_at', 'updated_at')
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.select_related('product')
 
 
 

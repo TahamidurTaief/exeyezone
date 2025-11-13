@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
 
 
 
@@ -42,7 +43,9 @@ class Tag(models.Model):
 class Product(models.Model):
     product_img = models.ImageField(upload_to='products/')
     title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    short_description = models.TextField(max_length=500, null=True, blank=True)
     category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -54,6 +57,77 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        # Auto-generate a unique slug from title when not provided
+        if not self.slug:
+            base = slugify(self.title)[:200]
+            slug = base
+            i = 1
+            while Product.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base}-{i}"
+                i += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+
+class ProductFeaturedImage(models.Model):
+    product = models.ForeignKey(Product, related_name='featured_images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products/featured/')
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"Featured Image {self.order} for {self.product.title}"
+
+
+class ProductFeature(models.Model):
+    product = models.ForeignKey(Product, related_name='features', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    icon = models.CharField(max_length=100, blank=True, null=True)  # Icon class or name
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.name} - {self.product.title}"
+
+
+class ProductScreenshot(models.Model):
+    SCREEN_TYPE_CHOICES = [
+        ('mobile', 'Mobile Screen'),
+        ('desktop', 'Desktop Screen'),
+    ]
+    
+    product = models.ForeignKey(Product, related_name='screenshots', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products/screenshots/')
+    title = models.CharField(max_length=200, blank=True, null=True, help_text="Screenshot title/description")
+    screen_type = models.CharField(max_length=10, choices=SCREEN_TYPE_CHOICES)
+    link = models.URLField(blank=True, null=True, help_text="Optional link when screenshot is clicked")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        title_text = f" - {self.title}" if self.title else ""
+        return f"{self.screen_type} Screenshot {self.order}{title_text} for {self.product.title}"
+
+
+class ProductTechnology(models.Model):
+    product = models.ForeignKey(Product, related_name='technologies', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    icon = models.CharField(max_length=100, blank=True, null=True)  # Icon class or name
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.name} - {self.product.title}"
     
 
 
@@ -187,12 +261,14 @@ class QuoteRequest(models.Model):
     email = models.EmailField()
     contact_number = models.CharField(max_length=20)
     description = models.TextField()
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='quote_requests')
     status = models.CharField(max_length=20, choices=QUOTE_STATUS, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Quote #{self.id} - {self.name}"
+        product_info = f" for {self.product.title}" if self.product else ""
+        return f"Quote #{self.id} - {self.name}{product_info}"
     
 
 
