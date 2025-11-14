@@ -14,9 +14,11 @@ const LatestProject = ({ product }) => {
   return (
     <div className='container pb-24'>
       <div className='justify-center text-center text-[var(--secondary)] pb-10'>
-        <h2 className='text-2xl md:text-4xl font-lato font-bold'>
+        <p className='text-sm md:text-base text-[var(--primary)] font-semibold tracking-wider uppercase mb-2'>Featured Work</p>
+        <h2 className='text-3xl md:text-4xl xl:text-5xl font-poppins font-semibold'>
           <span className="text-[var(--primary)]">Our latest</span> products
         </h2>
+        <p className='text-gray-600 mt-4 max-w-2xl mx-auto'>Discover our handpicked collection of premium products crafted with excellence</p>
       </div>
 
       <div className="w-full">
@@ -65,22 +67,24 @@ const LatestProject = ({ product }) => {
           >
             {product.map((data, index) => (
               <SwiperSlide key={index}>
-                <div className="flex flex-col gap-4 w-full pb-2">
-                  <Link href="/products" className="block rounded-lg w-full overflow-hidden group">
+                <div className="group flex flex-col gap-1 w-full pb-2">
+                  <Link href="/products" className="block rounded-2xl w-full overflow-hidden relative">
                     <div className="relative w-full h-[250px] md:h-[280px] lg:h-[300px]">
                       <Image
                         src={typeof data.product_img === 'string' && data.product_img !== '' ? data.product_img : noImage}
                         alt={typeof data.title === 'string' ? data.title : 'Product Image'}
                         fill
-                        className="object-cover rounded-lg group-hover:scale-110 transition-transform duration-500"
+                        className="object-cover rounded-2xl group-hover:scale-110 transition-transform duration-700"
                       />
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
                     </div>
                   </Link>
 
                   {Array.isArray(data.tags) && data.tags.length > 0 && (
                     <ul className="flex flex-row flex-wrap gap-2 font-lato text-gray-600 text-xs font-medium">
                       {data.tags.slice(0, 3).map((tag) => (
-                        <li key={tag.id} className="bg-gray-100 hover:bg-gray-200 transition-colors duration-200 px-3 py-1 rounded-full">
+                        <li key={tag.id} className="bg-gradient-to-r from-gray-100 to-gray-50 hover:from-[var(--primary)]/10 hover:to-[var(--primary)]/5 hover:text-[var(--primary)] transition-all duration-300 px-3 py-1.5 rounded-full border border-gray-200">
                           #{tag.name}
                         </li>
                       ))}
@@ -88,42 +92,20 @@ const LatestProject = ({ product }) => {
                   )}
 
                   <Link href="/products">
-                    <h2 className="font-lato font-semibold text-base md:text-lg line-clamp-2 hover:text-[var(--primary)] transition-colors duration-200 min-h-[3rem]">
+                    <h2 className="font-raleway font-bold text-base md:text-lg line-clamp-2 hover:text-[var(--primary)] transition-colors duration-300">
                       {typeof data.title === 'string' ? data.title : 'Untitled Product'}
                     </h2>
                   </Link>
 
                   <div className="flex justify-between items-center mt-auto">
                     {data.price && (
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-500 line-through">৳ {(data.price * 1.2).toFixed(0)}</span>
-                        <span className="text-lg font-bold text-[var(--primary)]">৳ {data.price}</span>
+                      <div className="flex flex-row gap-2 items-center">
+                        <span className="text-xl font-semibold text-[var(--primary)] font-poppins">$ {data.price}</span>
+                        <span className="text-sm text-gray-500 line-through font-poppins">$ {(data.price * 1.2).toFixed(0)}</span>
                       </div>
                     )}
-                    <Link href="/products" className="group">
-                      <svg
-                        width="38"
-                        height="40"
-                        viewBox="0 0 48 50"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="hover:scale-110 transition-transform duration-300"
-                      >
-                        <rect
-                          x="0.5"
-                          y="0.5"
-                          width="47"
-                          height="49"
-                          rx="4.5"
-                          stroke="#FAE0E1"
-                          className="group-hover:stroke-[var(--primary)] transition-colors duration-300"
-                        />
-                        <path
-                          d="M19.9697 32.5305C19.7034 32.2642 19.6792 31.8475 19.8971 31.5539L19.9697 31.4698L26.439 25.0001L19.9697 18.5305C19.7034 18.2642 19.6792 17.8475 19.8971 17.5539L19.9697 17.4698C20.2359 17.2035 20.6526 17.1793 20.9462 17.3972L21.0303 17.4698L28.0303 24.4698C28.2966 24.7361 28.3208 25.1527 28.1029 25.4463L28.0303 25.5305L21.0303 32.5305C20.7374 32.8233 20.2626 32.8233 19.9697 32.5305Z"
-                          fill="#3C3679"
-                          className="group-hover:fill-[var(--primary)] transition-colors duration-300"
-                        />
-                      </svg>
+                    <Link href="/products" className="group/btn border border-gradient-to-r from-[var(--secondary)] to-[var(--secondary)]/90 hover:from-[var(--primary)] hover:to-[var(--primary)]/90 p-3 rounded-xl  transform hover:scale-110 transition-all duration-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" className='hover:stroke-[var(--primary)] duration-200' width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </Link>
                   </div>
                 </div>
@@ -133,9 +115,9 @@ const LatestProject = ({ product }) => {
         )}
       </div>
 
-      <div className='text-center flex mt-10 lg:mt-14'>
-        <Link href="/products" className='text-center font-lato px-8 py-3 mx-auto border-2 border-[var(--secondary)] hover:border-[var(--primary)] text-[var(--secondary)] hover:text-white duration-300 hover:bg-[var(--primary)] font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all'>
-          Explore More Products
+      <div className='text-center flex mt-14 lg:mt-16'>
+        <Link href="/products" className='text-center font-raleway font-bold px-10 py-4 mx-auto bg-gradient-to-r from-[var(--secondary)] to-[var(--secondary)]/90 hover:from-[var(--primary)] hover:to-[var(--primary)]/90 text-white duration-500 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all'>
+          Explore More Products →
         </Link>
       </div>
     </div>

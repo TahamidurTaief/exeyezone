@@ -35,7 +35,7 @@ const HireUsComponent = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/services/');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/services/`);
         setServices(response.data);
       } catch (error) {
         console.error('Error fetching services:', error);
@@ -84,7 +84,7 @@ const HireUsComponent = () => {
     
     try {
       const response = await axios.post(
-        'http://127.0.0.1:8000/hire-requests/',
+        `${process.env.NEXT_PUBLIC_API_URL}/hire-requests/`,
         formData
       );
 

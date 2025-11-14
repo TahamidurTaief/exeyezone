@@ -1,0 +1,28 @@
+{
+  "name": "Exeyezone - Professional Software Solutions",
+  "short_name": "Exeyezone",
+  "description": "Perfection is our habit. Professional software solutions and digital products.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#EE2B46",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/img/Logo/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/Logo/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "technology"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "screenshots": []
+}

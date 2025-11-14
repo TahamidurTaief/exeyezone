@@ -18,7 +18,7 @@ const ProductComponent = ({ products }) => {
                 />
               </div>
               <div className="mt-3">
-                <Link href={`/products/${product.id}`}>
+                <Link href={`/products/${product.slug || product.id}`}>
                   <h1 className="text-[16px] font-raleway font-semibold justify-start hover:text-[var(--primary)]">
                     {product.title}
                   </h1>
@@ -48,9 +48,23 @@ const ProductComponent = ({ products }) => {
                   </p>
                 </div>
                 <div>
-                  <button className="border-[1px] border-secondary px-3 py-2 rounded-full font-lato justify-center items-center font-semibold text-gray-600 hover:text-white hover:bg-[var(--secondary)]">
-                    Live Demo
-                  </button>
+                  {product.demo ? (
+                    <a 
+                      href={product.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border-[1px] border-secondary px-3 py-2 rounded-full font-lato justify-center items-center font-semibold text-gray-600 hover:text-white hover:bg-[var(--secondary)] inline-block"
+                    >
+                      Live Demo
+                    </a>
+                  ) : (
+                    <Link
+                      href={`/products/${product.slug || product.id}`}
+                      className="border-[1px] border-secondary px-3 py-2 rounded-full font-lato justify-center items-center font-semibold text-gray-600 hover:text-white hover:bg-[var(--secondary)] inline-block"
+                    >
+                      View Details
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>      

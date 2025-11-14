@@ -23,3 +23,23 @@ export const fetchProducts = async (categoryId = null, searchQuery = '') => {
     return [];
   }
 };
+
+export const fetchProductById = async (id) => {
+  try {
+    const response = await api.get(`/products/${id}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    throw error;
+  }
+};
+
+export const fetchProductBySlug = async (slug) => {
+  try {
+    const response = await api.get(`/products/${slug}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching product by slug:', error);
+    throw error;
+  }
+};
