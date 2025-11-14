@@ -12,7 +12,7 @@ const CourseCard = ({ course }) => {
     <div className="group  p-3 relative flex flex-col gap-3 w-full bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[var(--primary)]/20 transition-all duration-500 hover:shadow-2xl hover:shadow-[var(--primary)]/10 hover:-translate-y-2">
       {/* Image Container with Overlay */}
       <div className="relative w-full h-52 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-        <Link href={`/courses/${course.id}`}>
+        <Link href={`/courses/${course.slug}`}>
           <CourseCardImage 
             src={course.img}
             alt={course.title}
@@ -37,7 +37,7 @@ const CourseCard = ({ course }) => {
         </div>
 
         {/* Title */}
-        <Link href={`/courses/${course.id}`}>
+        <Link href={`/courses/${course.slug}`}>
           <h3 className="text-[var(--secondary)] text-lg font-bold font-raleway leading-tight line-clamp-2 group-hover:text-[var(--primary)] transition-colors duration-300">
             {course.title || 'Untitled Course'}
           </h3>
@@ -72,7 +72,7 @@ const CourseCard = ({ course }) => {
 
         {/* CTA Button */}
         <Link 
-          href={`/courses/${course.id}`}
+          href={`/courses/${course.slug}`}
           className="mt-2 w-full bg-gradient-to-r from-[var(--primary)] to-[var(--primary)]/90 text-white py-2.5 px-4 rounded-xl font-semibold text-sm text-center hover:shadow-lg hover:shadow-[var(--primary)]/30 transition-all duration-300 group/btn"
         >
           <span className="flex items-center justify-center gap-2">

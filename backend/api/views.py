@@ -42,10 +42,23 @@ class CourseCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CourseCategorySerializer
 
 class CourseViewSet(viewsets.ModelViewSet):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category']
+    queryset = Course.objects.all().select_related('category').prefetch_related(
+        'tags', 'sections__lessons', 'what_you_learn', 'requirements', 'includes'
+    )
+    lookup_field = 'slug'
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['category', 'course_type']
+    search_fields = ['title', 'description', 'instructor', 'category__name', 'tags__name']
+    
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return CourseDetailSerializer
+        return CourseListSerializer
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
@@ -116,6 +129,26 @@ class HireRequestViewSet(viewsets.ModelViewSet):
             {
                 "status": "success",
                 "message": "Hire request submitted successfully",
+                "data": serializer.data
+            },
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )
+
+
+class CourseRegistrationViewSet(viewsets.ModelViewSet):
+    queryset = CourseRegistration.objects.all()
+    serializer_class = CourseRegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            {
+                "status": "success",
+                "message": "Course registration submitted successfully",
                 "data": serializer.data
             },
             status=status.HTTP_201_CREATED,

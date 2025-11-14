@@ -69,38 +69,57 @@ const Navbar = () => {
         </div>
 
         {/* Main sticky nav bar */}
-        <div className="bg-white drop-shadow-md w-full">
+        <div className="bg-white/95 backdrop-blur-sm shadow-sm w-full">
           <div className="container mx-auto px-4">
-            <div className="flex justify-between items-center py-2">
+            <div className="flex justify-between items-center py-3">
               <Link href="/" className="flex items-center">
                 <Image src={logo} alt="exeyezone logo" width={130} />
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden lg:flex">
-                <ul className="flex flex-row text-sm font-normal text-gray-800  gap-6 font-poppins items-center">
+              <div className="hidden lg:flex items-center gap-8">
+                <ul className="flex flex-row text-sm font-medium text-gray-700 gap-8 font-poppins items-center">
                   {navLinks.map((link) => (
                     <li 
                       key={link.href} 
-                      className={`${isActive(link.href) ? 'font-semibold text-[var(--primary)]' : ''}`}
+                      className="relative group"
                     >
-                      <Link href={link.href} className='hover:text-[var(--primary)]'>{link.text}</Link>
+                      <Link 
+                        href={link.href} 
+                        className={`transition-colors duration-200 hover:text-[var(--primary)] pb-1 ${
+                          isActive(link.href) ? 'text-[var(--primary)]' : ''
+                        }`}
+                      >
+                        {link.text}
+                      </Link>
+                      {/* Active underline */}
+                      <span 
+                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-[var(--primary)] transition-transform duration-300 ${
+                          isActive(link.href) ? 'scale-x-100' : 'scale-x-0'
+                        }`}
+                      />
+                      {/* Hover underline */}
+                      <span 
+                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-[var(--primary)] transition-transform duration-300 origin-left ${
+                          isActive(link.href) ? 'scale-x-0' : 'scale-x-0 group-hover:scale-x-100'
+                        }`}
+                      />
                     </li>
                   ))}
                 </ul>
 
-                <div className="bg-[var(--primary)] hover:bg-[var(--secondary)] duration-200 text-white text-sm font-poppins px-7 py-3 rounded-md cursor-pointer">
-                  <Link href="/hireus"> <p className='justify-center items-center text-center font-semibold'>Hire Us</p></Link>
-              </div>
+                <Link href="/hireus" className="bg-[var(--primary)]  hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 text-white text-sm font-poppins font-semibold px-6 py-2.5 rounded-full">
+                  Hire Us
+                </Link>
               </div>
 
               
 
               {/* Mobile menu button */}
-              <div className="lg:hidden flex items-center bg-[var(--third)] p-1 rounded-md">
+              <div className="lg:hidden flex items-center">
                 <button
                   onClick={toggleMenu}
-                  className="text-gray-800 focus:outline-none cursor-pointer"
+                  className="text-gray-800 hover:text-[var(--primary)] focus:outline-none cursor-pointer transition-colors duration-200 p-2 hover:bg-gray-50 rounded-lg"
                   aria-label="Toggle menu"
                 >
                   <CgMenuGridR className='text-2xl'/>
@@ -110,25 +129,36 @@ const Navbar = () => {
 
             {/* Mobile menu */}
             {isMenuOpen && (
-              <div className=" absolute min-w-48 right-5 lg:hidden bg-white drop-shadow-lg rounded-lg mt-2">
-                <div className="flex flex-col justify-between h-ful">
-                <ul className="flex flex-col text-sm font-normal text-gray-800 gap-4 font-poppins p-4">
+              <div className="absolute min-w-52 right-5 lg:hidden bg-white shadow-xl rounded-xl mt-2 border border-gray-100">
+                <div className="flex flex-col justify-between h-full">
+                <ul className="flex flex-col text-sm font-medium text-gray-700 gap-1 font-poppins p-3">
                   {navLinks.map((link) => (
                     <li 
                       key={link.href} 
-                      className={`${isActive(link.href) ? 'font-semibold text-[var(--primary)]' : ''}`}
+                      className={`rounded-lg transition-colors duration-200 ${
+                        isActive(link.href) 
+                          ? 'bg-[var(--primary)]/10 text-[var(--primary)] font-semibold' 
+                          : 'hover:bg-gray-50'
+                      }`}
                     >
                       <Link 
                         href={link.href} 
                         onClick={toggleMenu}
+                        className="block px-4 py-2.5"
                       >
                         {link.text}
                       </Link>
                     </li>
                     
                   ))}
-                  <li className="bg-[var(--primary)] w-full hover:bg-[var(--secondary)] active:bg-[var(--secondary)] rounded px-5 py-2 text-center">
-                      <Link href="/hireus" className='justify-center items-center text-center font-semibold text-white' onClick={toggleMenu}>Hire Us</Link>
+                  <li className="mt-2">
+                      <Link 
+                        href="/hireus" 
+                        className='block bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:shadow-md active:shadow-sm rounded-lg px-5 py-2.5 text-center font-semibold text-white transition-all duration-200' 
+                        onClick={toggleMenu}
+                      >
+                        Hire Us
+                      </Link>
                     </li>
                 </ul>
                 

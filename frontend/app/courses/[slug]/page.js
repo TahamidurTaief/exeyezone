@@ -1,8 +1,9 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { fetchCourseBySlug, submitCourseRegistration } from '@/utils/api/course';
 import { 
   CheckCircle, 
   Clock, 
@@ -24,9 +25,12 @@ import {
 
 const CourseDetailPage = ({ params }) => {
   const { slug } = params;
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [openSections, setOpenSections] = useState({});
   const [videoModal, setVideoModal] = useState({ isOpen: false, videoId: '' });
   const [registrationModal, setRegistrationModal] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -34,6 +38,19 @@ const CourseDetailPage = ({ params }) => {
     occupation: '',
     message: ''
   });
+
+  useEffect(() => {
+    const loadCourse = async () => {
+      setLoading(true);
+      const data = await fetchCourseBySlug(slug);
+      setCourse(data);
+      setLoading(false);
+    };
+    
+    if (slug) {
+      loadCourse();
+    }
+  }, [slug]);
 
   const toggleSection = (index) => {
     setOpenSections(prev => ({
@@ -66,20 +83,36 @@ const CourseDetailPage = ({ params }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // You can add API call here
-    closeRegistrationModal();
-    // Reset form
-    setFormData({
-      name: '',
-      phone: '',
-      email: '',
-      occupation: '',
-      message: ''
-    });
+    setSubmitting(true);
+    
+    try {
+      const registrationData = {
+        ...formData,
+        course: course.id
+      };
+      
+      await submitCourseRegistration(registrationData);
+      
+      // Show success message (you can add a toast notification here)
+      alert('Registration submitted successfully! We will contact you soon.');
+      
+      closeRegistrationModal();
+      // Reset form
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        occupation: '',
+        message: ''
+      });
+    } catch (error) {
+      alert('Failed to submit registration. Please try again.');
+      console.error('Registration error:', error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   // --- Icon Mapping ---
@@ -93,143 +126,41 @@ const CourseDetailPage = ({ params }) => {
     trophy: <Trophy className="w-5 h-5 text-gray-700 flex-shrink-0 mt-0.5" />
   };
 
-  // Static course data - replace with API call later
-  const course = {
-    title: "Complete Web Development Bootcamp 2024",
-    shortDescription: "Master modern web development with this comprehensive bootcamp covering HTML, CSS, JavaScript, React, Node.js, and much more!",
-    price: "$49.99",
-    originalPrice: "$89.99",
-    instructor: "John Doe",
-    rating: 4.8,
-    students: 12450,
-    lastUpdated: "November 2024",
-    language: "English",
-    videoUrl: "dQw4w9WgXcQ", // YouTube video ID
-    thumbnail: "/img/course/course1.jpg",
-    
-    whatYouLearn: [
-      "Build responsive websites using HTML5, CSS3, and JavaScript",
-      "Master React.js for building modern web applications",
-      "Understand backend development with Node.js and Express",
-      "Work with databases like MongoDB and PostgreSQL",
-      "Deploy applications to cloud platforms",
-      "Implement authentication and authorization",
-      "Create REST APIs and work with third-party APIs",
-      "Follow industry best practices and coding standards"
-    ],
-    
-    includes: [
-      { icon: "video", text: "52 hours on-demand video" },
-      { icon: "document", text: "75 articles" },
-      { icon: "download", text: "120 downloadable resources" },
-      { icon: "infinity", text: "Full lifetime access" },
-      { icon: "mobile", text: "Access on mobile and TV" },
-      { icon: "trophy", text: "Certificate of completion" }
-    ],
-    
-    courseContent: [
-      {
-        section: "Introduction to Web Development",
-        lectures: 12,
-        duration: "2h 30m",
-        lessons: [
-          { title: "Course Introduction", duration: "5:30", preview: true, videoId: "dQw4w9WgXcQ" },
-          { title: "Setting Up Your Development Environment", duration: "15:45", preview: true, videoId: "dQw4w9WgXcQ" },
-          { title: "HTML Basics", duration: "20:15", preview: false },
-          { title: "CSS Fundamentals", duration: "25:30", preview: false }
-        ]
-      },
-      {
-        section: "JavaScript Essentials",
-        lectures: 25,
-        duration: "5h 45m",
-        lessons: [
-          { title: "JavaScript Introduction", duration: "10:20", preview: true, videoId: "dQw4w9WgXcQ" },
-          { title: "Variables and Data Types", duration: "18:30", preview: false },
-          { title: "Functions and Scope", duration: "22:45", preview: false },
-          { title: "DOM Manipulation", duration: "30:15", preview: false }
-        ]
-      },
-      {
-        section: "React.js Masterclass",
-        lectures: 30,
-        duration: "8h 15m",
-        lessons: [
-          { title: "Introduction to React", duration: "12:30", preview: false },
-          { title: "Components and Props", duration: "20:45", preview: false },
-          { title: "State Management", duration: "25:30", preview: false },
-          { title: "Hooks in React", duration: "28:15", preview: false }
-        ]
-      },
-      {
-        section: "Backend Development with Node.js",
-        lectures: 28,
-        duration: "7h 30m",
-        lessons: [
-          { title: "Node.js Basics", duration: "15:20", preview: false },
-          { title: "Express.js Framework", duration: "22:30", preview: false },
-          { title: "Working with Databases", duration: "30:45", preview: false },
-          { title: "Building REST APIs", duration: "35:15", preview: false }
-        ]
-      },
-      {
-        section: "Deployment and Best Practices",
-        lectures: 15,
-        duration: "4h 20m",
-        lessons: [
-          { title: "Git and Version Control", duration: "18:30", preview: false },
-          { title: "Deploying to Heroku", duration: "25:45", preview: false },
-          { title: "AWS Deployment", duration: "30:20", preview: false },
-          { title: "Performance Optimization", duration: "28:15", preview: false }
-        ]
-      }
-    ],
-    
-    requirements: [
-      "Basic computer knowledge and internet access",
-      "No prior programming experience required",
-      "A computer (Windows, Mac, or Linux)",
-      "Willingness to learn and practice coding",
-      "Basic understanding of English"
-    ],
-    
-    description: `
-      <h3>About This Course</h3>
-      <p>Welcome to the most comprehensive web development course on the internet! This course is designed to take you from a complete beginner to a professional web developer capable of building full-stack web applications.</p>
-      
-      <h3>Why Choose This Course?</h3>
-      <p>With over 50 hours of content, hands-on projects, and real-world examples, you'll gain practical experience building modern web applications. Our curriculum is constantly updated to reflect the latest industry trends and best practices.</p>
-      
-      <h3>What Makes This Different?</h3>
-      <ul>
-        <li><strong>Project-Based Learning:</strong> Build 10+ real-world projects to add to your portfolio</li>
-        <li><strong>Industry-Relevant Skills:</strong> Learn the exact skills companies are looking for</li>
-        <li><strong>Comprehensive Curriculum:</strong> From fundamentals to advanced topics</li>
-        <li><strong>Lifetime Access:</strong> Learn at your own pace with unlimited access</li>
-        <li><strong>Community Support:</strong> Join thousands of students in our active community</li>
-      </ul>
-      
-      <h3>Career Opportunities</h3>
-      <p>After completing this course, you'll be ready for positions such as:</p>
-      <ul>
-        <li>Frontend Developer</li>
-        <li>Backend Developer</li>
-        <li>Full-Stack Developer</li>
-        <li>Web Application Developer</li>
-        <li>JavaScript Developer</li>
-      </ul>
-      
-      <h3>Instructor</h3>
-      <p>Your instructor has 10+ years of experience in web development and has worked with major tech companies. They bring real-world expertise and passion for teaching to help you succeed.</p>
-    `,
-    
-    relatedTopics: [ // Renamed to "Related Courses" in the JSX
-      { name: "React Advanced Patterns", image: "/img/course/course2.jpg" },
-      { name: "Node.js Microservices", image: "/img/course/course3.jpg" },
-      { name: "GraphQL Masterclass", image: "/img/course/course4.jpg" },
-      { name: "TypeScript Complete Guide", image: "/img/course/course5.jpg" }
-    ]
-  };
+  // Loading state
+  if (loading) {
+    return (
+      <div className="bg-gray-50 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[var(--primary)] mx-auto mb-4"></div>
+          <p className="text-gray-600 font-lato">Loading course details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Not found state
+  if (!course) {
+    return (
+      <div className="bg-gray-50 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">Course Not Found</h1>
+          <p className="text-gray-600 mb-6">The course you're looking for doesn't exist.</p>
+          <Link 
+            href="/courses" 
+            className="inline-flex items-center gap-2 bg-[var(--primary)] text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Courses
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Calculate discount percentage
+  const discountPercentage = course.original_price 
+    ? Math.round(((course.original_price - course.price) / course.original_price) * 100)
+    : 0;
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -310,7 +241,7 @@ const CourseDetailPage = ({ params }) => {
                   <div className="flex gap-4">
                     <div className="relative w-24 h-16 rounded-lg overflow-hidden flex-shrink-0">
                       <Image 
-                        src={course.thumbnail}
+                        src={course.img}
                         alt={course.title}
                         fill
                         className="object-cover"
@@ -321,9 +252,13 @@ const CourseDetailPage = ({ params }) => {
                         {course.title}
                       </h3>
                       <div className="flex items-center gap-3 mt-2">
-                        <span className="text-2xl font-bold text-[var(--primary)]">{course.price}</span>
-                        <span className="text-sm text-gray-400 line-through">{course.originalPrice}</span>
-                        <span className="text-xs font-semibold text-white bg-green-500 px-2 py-1 rounded">50% OFF</span>
+                        <span className="text-2xl font-bold text-[var(--primary)]">${course.price}</span>
+                        {course.original_price && (
+                          <>
+                            <span className="text-sm text-gray-400 line-through">${course.original_price}</span>
+                            <span className="text-xs font-semibold text-white bg-green-500 px-2 py-1 rounded">{discountPercentage}% OFF</span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -440,9 +375,10 @@ const CourseDetailPage = ({ params }) => {
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-[var(--primary)] to-red-700 text-white font-bold rounded-lg hover:shadow-lg hover:scale-[1.02] transition-all font-raleway"
+                  disabled={submitting}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-[var(--primary)] to-red-700 text-white font-bold rounded-lg hover:shadow-lg hover:scale-[1.02] transition-all font-raleway disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Submit Request
+                  {submitting ? 'Submitting...' : 'Submit Request'}
                 </button>
               </div>
             </motion.div>
@@ -469,19 +405,19 @@ const CourseDetailPage = ({ params }) => {
             {course.title}
           </h1>
           <p className="font-lato text-base text-gray-100 mb-4 max-w-3xl leading-relaxed">
-            {course.shortDescription}
+            {course.short_description}
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
             <div className="flex items-center gap-2 bg-white bg-opacity-10 px-3 py-1.5 rounded-full backdrop-blur-sm">
               <span className="text-yellow-400 font-bold">★ {course.rating}</span>
-              <span className="text-gray-200">({course.students.toLocaleString()} students)</span>
+              <span className="text-gray-200">({course.students_count.toLocaleString()} students)</span>
             </div>
             <div className="text-gray-200">
               By <span className="text-white font-semibold">{course.instructor}</span>
             </div>
             <div className="flex items-center gap-2 text-gray-200">
               <Clock className="w-4 h-4" />
-              <span>{course.lastUpdated}</span>
+              <span>{course.last_updated}</span>
             </div>
             <div className="text-gray-200 flex items-center gap-1">
               <span>🌐</span>
@@ -505,10 +441,10 @@ const CourseDetailPage = ({ params }) => {
                 What You'll Learn
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3">
-                {course.whatYouLearn.map((item, index) => (
+                {course.what_you_learn?.map((item, index) => (
                   <div key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200">
                     <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <p className="font-lato text-sm text-gray-700">{item}</p>
+                    <p className="font-lato text-sm text-gray-700">{item.text}</p>
                   </div>
                 ))}
               </div>
@@ -521,7 +457,7 @@ const CourseDetailPage = ({ params }) => {
                 Course Content
               </h2>
               <div className="space-y-2">
-                {course.courseContent.map((section, index) => (
+                {course.sections?.map((section, index) => (
                   <div key={index} className="border border-gray-200 rounded-xl overflow-hidden hover:border-[var(--primary)] transition-all duration-300">
                     <button
                       onClick={() => toggleSection(index)}
@@ -533,7 +469,7 @@ const CourseDetailPage = ({ params }) => {
                             <ChevronDown className="w-5 h-5 text-[var(--primary)]" />
                           </div>
                           <h3 className="font-raleway font-semibold text-[var(--secondary)] text-left truncate">
-                            {section.section}
+                            {section.title}
                           </h3>
                         </div>
                         <div className="text-xs text-gray-600 flex-shrink-0 bg-gray-100 px-3 py-1 rounded-full">
@@ -551,16 +487,16 @@ const CourseDetailPage = ({ params }) => {
                           transition={{ duration: 0.3 }}
                           className="bg-white overflow-hidden"
                         >
-                          {section.lessons.map((lesson, lessonIndex) => (
+                          {section.lessons?.map((lesson, lessonIndex) => (
                             <div key={lessonIndex} className="flex justify-between items-center px-5 py-3 border-t border-gray-100 hover:bg-gradient-to-r hover:from-blue-50 hover:to-transparent transition-all duration-200">
                               <div className="flex items-center gap-3 flex-1 min-w-0">
                                 <PlayCircle className="w-4 h-4 text-gray-500 flex-shrink-0" />
                                 <span className="font-lato text-sm text-gray-700 truncate">{lesson.title}</span>
                               </div>
                               <div className='flex items-center gap-3 flex-shrink-0'>
-                                {lesson.preview && (
+                                {lesson.is_preview && (
                                   <button 
-                                    onClick={() => openVideoPreview(lesson.videoId)}
+                                    onClick={() => openVideoPreview(lesson.video_id)}
                                     className="text-xs text-[var(--primary)] font-semibold hover:underline bg-red-50 px-3 py-1 rounded-full hover:bg-red-100 transition-colors"
                                   >
                                     Preview
@@ -579,63 +515,69 @@ const CourseDetailPage = ({ params }) => {
             </div>
 
             {/* Requirements */}
-            <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300">
-              <h2 className="font-raleway text-xl md:text-2xl font-bold text-[var(--secondary)] mb-5 flex items-center gap-2">
-                <div className="w-1 h-8 bg-[var(--primary)] rounded-full"></div>
-                Requirements
-              </h2>
-              <ul className="space-y-2.5">
-                {course.requirements.map((req, index) => (
-                  <li key={index} className="font-lato text-sm text-gray-700 flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                    <span className="text-[var(--primary)] font-bold flex-shrink-0 mt-0.5">•</span>
-                    <span>{req}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {course.requirements && course.requirements.length > 0 && (
+              <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300">
+                <h2 className="font-raleway text-xl md:text-2xl font-bold text-[var(--secondary)] mb-5 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-[var(--primary)] rounded-full"></div>
+                  Requirements
+                </h2>
+                <ul className="space-y-2.5">
+                  {course.requirements.map((req, index) => (
+                    <li key={index} className="font-lato text-sm text-gray-700 flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                      <span className="text-[var(--primary)] font-bold flex-shrink-0 mt-0.5">•</span>
+                      <span>{req.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Description */}
-            <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300">
-              <h2 className="font-raleway text-xl md:text-2xl font-bold text-[var(--secondary)] mb-5 flex items-center gap-2">
-                <div className="w-1 h-8 bg-[var(--primary)] rounded-full"></div>
-                Description
-              </h2>
-              <div 
-                className="font-lato text-sm text-gray-700 prose max-w-none prose-h3:font-raleway prose-h3:text-[var(--secondary)] prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3 prose-ul:my-2 prose-li:my-1"
-                dangerouslySetInnerHTML={{ __html: course.description }}
-              />
-            </div>
+            {course.description && (
+              <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300">
+                <h2 className="font-raleway text-xl md:text-2xl font-bold text-[var(--secondary)] mb-5 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-[var(--primary)] rounded-full"></div>
+                  Description
+                </h2>
+                <div 
+                  className="font-lato text-sm text-gray-700 prose max-w-none prose-h3:font-raleway prose-h3:text-[var(--secondary)] prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3 prose-ul:my-2 prose-li:my-1"
+                  dangerouslySetInnerHTML={{ __html: course.description }}
+                />
+              </div>
+            )}
 
             {/* Related Courses */}
-            <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300">
-              <h2 className="font-raleway text-xl md:text-2xl font-bold text-[var(--secondary)] mb-5 flex items-center gap-2">
-                <div className="w-1 h-8 bg-[var(--primary)] rounded-full"></div>
-                Related Courses
-              </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {course.relatedTopics.map((topic, index) => (
-                  <Link 
-                    key={index}
-                    href="#"
-                    className="group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 block transform hover:scale-105"
-                  >
-                    <div className="aspect-[4/3] bg-gray-200 relative">
-                      <Image 
-                        src={topic.image} 
-                        alt={topic.name}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                    </div>
-                    <div className="absolute bottom-0 left-0 p-3 w-full">
-                      <p className="text-white font-semibold text-sm drop-shadow-lg">{topic.name}</p>
-                    </div>
-                  </Link>
-                ))}
+            {course.related_courses && course.related_courses.length > 0 && (
+              <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300">
+                <h2 className="font-raleway text-xl md:text-2xl font-bold text-[var(--secondary)] mb-5 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-[var(--primary)] rounded-full"></div>
+                  Related Courses
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  {course.related_courses.map((relatedCourse, index) => (
+                    <Link 
+                      key={index}
+                      href={`/courses/${relatedCourse.slug}`}
+                      className="group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 block transform hover:scale-105"
+                    >
+                      <div className="aspect-[4/3] bg-gray-200 relative">
+                        <Image 
+                          src={relatedCourse.img} 
+                          alt={relatedCourse.title}
+                          fill
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                      </div>
+                      <div className="absolute bottom-0 left-0 p-3 w-full">
+                        <p className="text-white font-semibold text-sm drop-shadow-lg line-clamp-2">{relatedCourse.title}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Right Column - Sticky Summary Card */}
@@ -644,9 +586,9 @@ const CourseDetailPage = ({ params }) => {
               <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 hover:shadow-3xl transition-all duration-300">
                 
                 {/* Video Preview */}
-                <div className="relative aspect-video bg-gray-900 group cursor-pointer overflow-hidden" onClick={() => openVideoPreview(course.videoUrl)}>
+                <div className="relative aspect-video bg-gray-900 group cursor-pointer overflow-hidden" onClick={() => openVideoPreview(course.video_url)}>
                   <Image 
-                    src={course.thumbnail}
+                    src={course.img}
                     alt={course.title}
                     fill
                     sizes="(max-width: 1024px) 100vw, 33vw"
@@ -670,16 +612,22 @@ const CourseDetailPage = ({ params }) => {
                   {/* Price */}
                   <div className="mb-4">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-bold text-[var(--secondary)]">{course.price}</span>
-                      <span className="text-lg text-gray-400 line-through">{course.originalPrice}</span>
+                      <span className="text-3xl font-bold text-[var(--secondary)]">${course.price}</span>
+                      {course.original_price && (
+                        <span className="text-lg text-gray-400 line-through">${course.original_price}</span>
+                      )}
                     </div>
-                    <div className="text-base font-semibold text-green-600 mt-1">
-                      50% OFF - Limited Time!
-                    </div>
-                    <div className="flex items-center gap-2 text-amber-600 font-semibold mt-2 text-xs bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">
-                      <Clock className="w-4 h-4" />
-                      <span>Only 1 day left at this price!</span>
-                    </div>
+                    {course.original_price && (
+                      <div className="text-base font-semibold text-green-600 mt-1">
+                        {discountPercentage}% OFF - Limited Time!
+                      </div>
+                    )}
+                    {course.deadline && (
+                      <div className="flex items-center gap-2 text-amber-600 font-semibold mt-2 text-xs bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">
+                        <Clock className="w-4 h-4" />
+                        <span>Enrollment deadline: {new Date(course.deadline).toLocaleDateString()}</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Action Button */}
@@ -702,7 +650,7 @@ const CourseDetailPage = ({ params }) => {
                       This Course Includes:
                     </h3>
                     <ul className="space-y-3">
-                      {course.includes.map((item, index) => (
+                      {course.includes?.map((item, index) => (
                         <li key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                           {iconMap[item.icon] || <CheckCircle className="w-5 h-5 text-gray-700 flex-shrink-0 mt-0.5" />}
                           <span className="font-lato text-sm text-gray-800">{item.text}</span>

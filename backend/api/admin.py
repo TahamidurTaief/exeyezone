@@ -108,12 +108,117 @@ class ProductTechnologyAdmin(ModelAdmin):
     list_filter = ('product',)
 
 
+class CourseSectionInline(admin.TabularInline):
+    model = CourseSection
+    extra = 1
+    show_change_link = True
+
+
+class CourseLessonInline(admin.TabularInline):
+    model = CourseLesson
+    extra = 3
+
+
+class CourseWhatYouLearnInline(admin.TabularInline):
+    model = CourseWhatYouLearn
+    extra = 3
+
+
+class CourseRequirementInline(admin.TabularInline):
+    model = CourseRequirement
+    extra = 3
+
+
+class CourseIncludesInline(admin.TabularInline):
+    model = CourseIncludes
+    extra = 3
+
+
 @admin.register(Course)
 class CourseAdmin(ModelAdmin):
-    list_display = ('title', 'course_type', 'deadline', 'price', 'created_at')
-    list_filter = ('course_type', 'deadline')
-    search_fields = ('title', 'description')
+    list_display = ('title', 'slug', 'course_type', 'instructor', 'price', 'rating', 'students_count', 'created_at')
+    list_filter = ('course_type', 'category', 'language', 'created_at')
+    search_fields = ('title', 'description', 'instructor')
     filter_horizontal = ('tags',)
+    prepopulated_fields = {"slug": ("title",)}
+    inlines = [CourseSectionInline, CourseWhatYouLearnInline, CourseRequirementInline, CourseIncludesInline]
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'slug', 'short_description', 'description', 'img')
+        }),
+        ('Course Details', {
+            'fields': ('category', 'tags', 'course_type', 'instructor', 'language')
+        }),
+        ('Pricing', {
+            'fields': ('price', 'original_price')
+        }),
+        ('Statistics', {
+            'fields': ('rating', 'students_count')
+        }),
+        ('Media', {
+            'fields': ('video_url',)
+        }),
+        ('Dates', {
+            'fields': ('deadline',)
+        }),
+    )
+
+
+@admin.register(CourseSection)
+class CourseSectionAdmin(ModelAdmin):
+    list_display = ('course', 'title', 'order')
+    list_filter = ('course',)
+    search_fields = ('title', 'course__title')
+    inlines = [CourseLessonInline]
+
+
+@admin.register(CourseLesson)
+class CourseLessonAdmin(ModelAdmin):
+    list_display = ('title', 'section', 'duration', 'is_preview', 'order')
+    list_filter = ('section__course', 'is_preview')
+    search_fields = ('title', 'section__title')
+
+
+@admin.register(CourseWhatYouLearn)
+class CourseWhatYouLearnAdmin(ModelAdmin):
+    list_display = ('course', 'text', 'order')
+    list_filter = ('course',)
+
+
+@admin.register(CourseRequirement)
+class CourseRequirementAdmin(ModelAdmin):
+    list_display = ('course', 'text', 'order')
+    list_filter = ('course',)
+
+
+@admin.register(CourseIncludes)
+class CourseIncludesAdmin(ModelAdmin):
+    list_display = ('course', 'icon', 'text', 'order')
+    list_filter = ('course', 'icon')
+
+
+@admin.register(CourseRegistration)
+class CourseRegistrationAdmin(ModelAdmin):
+    list_display = ('name', 'email', 'course', 'occupation', 'status', 'created_at')
+    list_filter = ('status', 'occupation', 'course', 'created_at')
+    search_fields = ('name', 'email', 'course__title')
+    readonly_fields = ('created_at', 'updated_at')
+    
+    fieldsets = (
+        ('Student Information', {
+            'fields': ('name', 'email', 'phone', 'occupation')
+        }),
+        ('Course Information', {
+            'fields': ('course', 'message')
+        }),
+        ('Status', {
+            'fields': ('status',)
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at')
+        }),
+    )
 
 
 @admin.register(Tag)
