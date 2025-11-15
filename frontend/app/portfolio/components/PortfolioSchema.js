@@ -9,7 +9,7 @@ const PortfolioSchema = () => {
     "name": "Exeyezone",
     "url": "https://exeyezone.com",
     "logo": "https://exeyezone.com/img/logo.png",
-    "description": "Leading software development company specializing in web development, mobile apps, AI solutions, and digital innovation",
+    "description": "Leading software development company with 250+ happy clients, 500+ completed projects, and a 98% client satisfaction rate. Specializing in web development, mobile apps, AI solutions, and digital innovation across 30+ countries.",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "BD"
@@ -28,17 +28,25 @@ const PortfolioSchema = () => {
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "reviewCount": "100"
+      "reviewCount": "250",
+      "bestRating": "5",
+      "worstRating": "1"
     },
     "numberOfEmployees": {
       "@type": "QuantitativeValue",
-      "value": "15"
+      "value": "25"
     },
     "foundingDate": "2020",
-    "areaServed": {
-      "@type": "Place",
-      "name": "Worldwide"
-    },
+    "areaServed": [
+      {
+        "@type": "Place",
+        "name": "Worldwide"
+      },
+      {
+        "@type": "GeoShape",
+        "addressCountry": ["US", "UK", "BD", "CA", "AU"]
+      }
+    ],
     "knowsAbout": [
       "Web Development",
       "Mobile App Development",
@@ -46,8 +54,11 @@ const PortfolioSchema = () => {
       "E-commerce Solutions",
       "AI & Machine Learning",
       "Software Testing",
-      "Custom Software Development"
+      "Custom Software Development",
+      "Freelance Development",
+      "Digital Transformation"
     ],
+    "slogan": "Empowering businesses with innovative technology solutions",
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Software Development Services",
@@ -77,7 +88,14 @@ const PortfolioSchema = () => {
           }
         }
       ]
-    }
+    },
+    "knowsLanguage": ["English", "Bengali"],
+    "award": [
+      "250+ Happy Clients Served",
+      "500+ Projects Successfully Delivered",
+      "98% Client Satisfaction Rate",
+      "350+ Freelance Projects Completed"
+    ]
   };
 
   return (
