@@ -1,17 +1,31 @@
 import ProductPage from '@/app/Components/Products/ProductPage';
+import api from '@/utils/axios';
 
 async function getProducts(category = null) {
-  let url = `${process.env.NEXT_PUBLIC_API_URL}/products/`;
-  if (category && category !== 'all') {
-    url += `?category=${category}`;
+  try {
+    const params = {};
+    if (category && category !== 'all') {
+      params.category = category;
+    }
+    
+    const response = await api.get('/products/', { params });
+    return response.data || [];
+  } catch (error) {
+    console.error('Error fetching products:', error.message);
+    // Return empty array on error to prevent page crash
+    return [];
   }
-  const res = await fetch(url);
-  return res.json();
 }
 
 async function getCategories() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/productcategories/`);
-  return res.json();
+  try {
+    const response = await api.get('/productcategories/');
+    return response.data || [];
+  } catch (error) {
+    console.error('Error fetching categories:', error.message);
+    // Return empty array on error to prevent page crash
+    return [];
+  }
 }
 
 export default async function Page({ searchParams }) {
