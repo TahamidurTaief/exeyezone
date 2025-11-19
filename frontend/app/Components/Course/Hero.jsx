@@ -1,73 +1,214 @@
-import { SearchIcon } from "@/public/icons/ProductsIcons";
-import { CourseLottieAnimation } from "@/public/lottie/LottieAnimation";
-import Link from "next/link";
+'use client';
 
+import { motion } from 'framer-motion';
+import { BookOpen, GraduationCap, Award, Users, TrendingUp } from 'lucide-react';
+import { SiPython, SiJavascript, SiReact, SiNodedotjs, SiHtml5, SiCss3, SiGit, SiDocker, SiAmazon, SiMongodb, SiPostgresql, SiTypescript } from 'react-icons/si';
 
+const Hero = ({ totalCourses = 25 }) => {
+  const stats = [
+    { icon: BookOpen, value: `${totalCourses}+`, label: 'Professional Courses' },
+    { icon: Users, value: '1000+', label: 'Happy Students' },
+    { icon: Award, value: '95%', label: 'Success Rate' },
+  ];
 
+  // Education & Tech related icons for floating animation
+  const techIcons = [
+    { Icon: SiPython, color: '#3776AB', x: '8%', y: '12%', duration: 9 },
+    { Icon: SiJavascript, color: '#F7DF1E', x: '88%', y: '18%', duration: 11 },
+    { Icon: SiReact, color: '#61DAFB', x: '12%', y: '72%', duration: 10 },
+    { Icon: SiNodedotjs, color: '#339933', x: '85%', y: '68%', duration: 8 },
+    { Icon: SiHtml5, color: '#E34F26', x: '6%', y: '42%', duration: 12 },
+    { Icon: SiCss3, color: '#1572B6', x: '92%', y: '46%', duration: 9 },
+    { Icon: SiTypescript, color: '#3178C6', x: '18%', y: '28%', duration: 10 },
+    { Icon: SiGit, color: '#F05032', x: '78%', y: '82%', duration: 11 },
+    { Icon: SiDocker, color: '#2496ED', x: '15%', y: '58%', duration: 8 },
+    { Icon: SiMongodb, color: '#47A248', x: '82%', y: '35%', duration: 10 },
+    { Icon: SiPostgresql, color: '#4169E1', x: '24%', y: '85%', duration: 9 },
+    { Icon: SiAmazon, color: '#FF9900', x: '72%', y: '8%', duration: 11 },
+  ];
 
-
-const Hero = () => {
   return (
+    <section className="w-full relative overflow-hidden bg-gradient-to-br from-blue-50/30 via-white to-purple-50/30 pt-20 pb-12">
+      {/* Animated Tech Icons Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {techIcons.map((tech, index) => (
+          <motion.div
+            key={index}
+            className="absolute"
+            style={{ 
+              left: tech.x, 
+              top: tech.y,
+              opacity: 0.07
+            }}
+            animate={{
+              y: [0, -25, 0],
+              x: [0, 12, 0],
+              rotate: [0, 8, -8, 0],
+            }}
+            transition={{
+              duration: tech.duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: index * 0.4
+            }}
+          >
+            <tech.Icon 
+              className="w-14 h-14 md:w-18 md:h-18 lg:w-20 lg:h-20" 
+              style={{ color: tech.color }}
+            />
+          </motion.div>
+        ))}
+      </div>
 
+      {/* Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] rounded-full opacity-20"
+            style={{ 
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -40, 0],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: Math.random() * 2
+            }}
+          />
+        ))}
+      </div>
 
-    <div>
-      <div className="">
-        <div className="flex flex-col md:flex-row gap-10 xl:gap-20 text-black font-poppins items-center">
-          {/* RIGHT SIDE START HERE */}
-          <div className="w-full ">
-            <div>
-              <h2 className="text-[var(--secondary)] text-4xl font-semibold xl:text-4xl 2xl:text-6xl">
-                <span className="text-[var(--primary)]">25+</span> Professional
-                <br />
-                Courses here
-              </h2>
+      {/* Gradient Waves */}
+      <div className="absolute inset-0 overflow-hidden opacity-30">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-full h-1 bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent"
+            style={{ 
+              top: `${30 + i * 20}%`,
+            }}
+            animate={{
+              x: ['-100%', '100%'],
+              opacity: [0, 0.3, 0],
+            }}
+            transition={{
+              duration: 6 + i * 2,
+              repeat: Infinity,
+              ease: "linear",
+              delay: i * 2
+            }}
+          />
+        ))}
+      </div>
 
-              <p className="text-xs 2xl:text-sm 2xl:leading-6 leading-5 text-gray-700 mt-5 font-lato ">
-              Explore the best premium themes and plugins available for sale. Our unique collection is hand-curated by experts. Find and buy the perfect premium theme.
-              </p>
-            </div>
+      {/* Color Blur Effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute -top-16 -right-16 w-64 h-64 rounded-full filter blur-[100px] opacity-25"
+          style={{ backgroundColor: 'var(--primary)' }}
+          animate={{
+            x: [0, 40, 0],
+            y: [0, 25, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 -left-16 w-80 h-80 rounded-full filter blur-[100px] opacity-20"
+          style={{ backgroundColor: 'var(--secondary)' }}
+          animate={{
+            x: [0, -25, 0],
+            y: [0, 40, 0],
+            scale: [1, 1.15, 1],
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-8 right-1/3 w-56 h-56 bg-purple-400 rounded-full filter blur-[90px] opacity-15"
+          animate={{
+            x: [0, 35, 0],
+            y: [0, -35, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
 
-            <div className="flex flex-row mt-5 gap-7 items-center">
-                            <div className="bg-[var(--primary)] hover:bg-[var(--secondary)] duration-200 text-white text-sm font-poppins px-7 py-3 rounded-md cursor-pointer">
-                                <Link href="/"> <p className='justify-center items-center text-center font-semibold'>Contact Now</p></Link>
-                            </div>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-5xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-4 font-lato text-white" style={{ backgroundColor: 'var(--primary)' }}>
+              <GraduationCap className="w-4 h-4" />
+              Start Your Learning Journey
+            </span>
+          </motion.div>
 
-                            <div className="flex flex-row gap-2 items-center">
-                              <Link href="/hireus">
-                                <div className="border-2 p-2 border-[var(--primary)] hover:border-[var(--secondary)] duration-200 rounded-md">
-                                
-                                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M7.96967 19.5303C7.7034 19.2641 7.6792 18.8474 7.89705 18.5538L7.96967 18.4697L14.439 12L7.96967 5.53033C7.7034 5.26406 7.6792 4.8474 7.89705 4.55379L7.96967 4.46967C8.23594 4.2034 8.6526 4.1792 8.94621 4.39705L9.03033 4.46967L16.0303 11.4697C16.2966 11.7359 16.3208 12.1526 16.1029 12.4462L16.0303 12.5303L9.03033 19.5303C8.73744 19.8232 8.26256 19.8232 7.96967 19.5303Z" fill="red"/>
-                                  </svg>
-                                </div>
-                              </Link>
+          <motion.h1
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold font-raleway mb-4 leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <span style={{ color: 'var(--primary)' }}>Master New Skills</span>
+            <br />
+            <span style={{ color: 'var(--secondary)' }}>Transform Your Career</span>
+          </motion.h1>
 
+          <motion.p
+            className="text-sm md:text-base lg:text-lg text-gray-600 font-lato mb-8 max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            Unlock your potential with our expertly crafted courses. From programming to design, 
+            gain the skills you need to succeed in today's digital world.
+          </motion.p>
 
-                              <div className='hover:text-[var(--primary)]'>
-                                <h2 className='text-base font-semibold'><Link href="/">Hire us now</Link></h2>
-                              </div>
-
-                            </div>
-                            
-                        </div>
-          </div>
-
-          {/* RIGHT SIDE END HERE */}
-
-          {/* LEFT SIDE END HERE */}
-          <div className="w-full md:pl-24 p-5 relative h-full">
-            <div className="flex justify-center px-10 pt-5 md:pt-2 2xl:ml-10 py-5 h-full">
- 
-
-                <CourseLottieAnimation />
-            </div>
-
-
-          </div>
-          {/* LEFT SIDE START HERE */}
+          {/* Stats */}
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mt-10 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                className="bg-white/90 backdrop-blur-sm rounded-xl p-4 md:p-5 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200/50"
+                whileHover={{ y: -5, scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <stat.icon className="w-6 h-6 md:w-7 md:h-7 mx-auto mb-2" style={{ color: 'var(--primary)' }} />
+                <div className="text-xl md:text-2xl lg:text-3xl font-bold font-poppins text-gray-900 mb-1">{stat.value}</div>
+                <div className="text-xs md:text-sm font-lato text-gray-600">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

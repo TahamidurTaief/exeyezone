@@ -1,6 +1,7 @@
 import Image from "next/image";
 import AboutHero from './AboutHero';
 import Mission from './Mission';
+import OurStory from './OurStory';
 
 
 import deskImg from "@/public/img/desk.jpg";
@@ -69,6 +70,7 @@ const AboutComponentPage = async () => {
     <div className=" pb-20 ">
       <AboutHero />
       <Mission />
+      <OurStory />
       <div className=" mt-20 pb-20"> 
         <Image src={deskImg} alt="exeyezone desk" />
       </div>

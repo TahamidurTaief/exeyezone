@@ -1,0 +1,7 @@
+- on "What we do" section, set some animation using framer motion and increase interactivity and make it more modern and attractive. use solid color and maintain simplicity.
+
+- on "Our latest products", if i click on any product, then redirect me to that clicked productdetails page. link demo: http://192.168.0.111:3000/products/modern-react-dashboard-template
+
+now it is redirecting me to /product page.
+
+* and replace Featured Work to Featured Products

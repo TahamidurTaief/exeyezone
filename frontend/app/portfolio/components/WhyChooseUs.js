@@ -27,9 +27,9 @@ const WhyChooseUs = () => {
         </svg>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full relative z-10">
         <motion.div
-          className="max-w-3xl mx-auto text-center mb-12 md:mb-16"
+          className="max-w-3xl mx-auto text-center mb-12 md:mb-16 container"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -44,7 +44,7 @@ const WhyChooseUs = () => {
         </motion.div>
 
         {/* Git-style workflow visualization */}
-        <div className="max-w-6xl mx-auto mb-12 md:mb-16">
+        <div className="container mb-12 md:mb-16">
           <div className="relative">
             {/* Connection lines */}
             <div className="hidden lg:block absolute inset-0 pointer-events-none">
@@ -142,7 +142,7 @@ const WhyChooseUs = () => {
 
         {/* Stats - Git merge style */}
         <motion.div
-          className="max-w-5xl mx-auto"
+          className="container"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

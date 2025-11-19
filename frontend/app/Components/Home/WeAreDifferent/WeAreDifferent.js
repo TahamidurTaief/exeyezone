@@ -1,12 +1,23 @@
 'use client'
-import React from 'react'
+import React, { useRef } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 import me_and_taief_img from "@/public/img/me_and_taief.png"
 import { BestQualityIcon, IntegrityIcon, StrategyIcon } from './Icons'
 
 const WeAreDifferent = () => {
+  const sectionRef = useRef(null);
+  
+  // Scroll-based animations
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
   const features = [
     {
       Icon: BestQualityIcon,
@@ -74,75 +85,32 @@ const WeAreDifferent = () => {
   }
 
   return (
-    <div className="relative overflow-hidden ">
-      {/* Animated Gradient Background Circles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 30, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute -top-32 -left-32 w-72 h-72 md:w-96 md:h-96 bg-gradient-to-br from-blue-400/15 via-purple-400/15 to-pink-400/15 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.25, 1],
-            x: [0, -20, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 22,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/4 -right-24 w-64 h-64 md:w-80 md:h-80 bg-gradient-to-bl from-cyan-400/12 via-teal-400/12 to-green-400/12 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            x: [0, 25, 0],
-            y: [0, -25, 0],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute bottom-10 left-1/4 w-56 h-56 md:w-72 md:h-72 bg-gradient-to-tr from-orange-400/12 via-red-400/12 to-pink-400/12 rounded-full blur-3xl"
-        />
-      </div>
-
+    <div ref={sectionRef} className="relative overflow-hidden py-12 md:py-16 lg:py-20 bg-gray-50">
       {/* Main Content */}
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={containerVariants}
-          className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-10"
+          className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16"
         >
-          {/* Left Section - Content - More Compact */}
+          {/* Left Section - Content */}
           <motion.div 
             variants={headingVariants}
-            className="w-full lg:w-[45%] flex flex-col justify-between"
+            className="w-full lg:w-1/2 flex flex-col justify-center"
           >
             {/* Heading */}
-            <div className="space-y-2 mb-4">
+            <div className="mb-6 lg:mb-8">
               <motion.h2 
-                className="text-2xl md:text-3xl lg:text-4xl font-raleway font-bold text-[var(--secondary)] leading-tight"
+                className="text-3xl sm:text-4xl lg:text-5xl font-raleway font-bold text-[var(--secondary)] leading-tight mb-4"
                 variants={headingVariants}
               >
                 Why we are{' '}
                 <span className="text-[var(--primary)] relative inline-block">
                   different
                   <motion.span
-                    className="absolute bottom-0 left-0 w-full h-1 bg-[var(--primary)] opacity-30"
+                    className="absolute bottom-1 left-0 w-full h-1 bg-[var(--primary)] opacity-30"
                     initial={{ width: 0 }}
                     whileInView={{ width: "100%" }}
                     viewport={{ once: true }}
@@ -152,7 +120,7 @@ const WeAreDifferent = () => {
               </motion.h2>
               
               <motion.p 
-                className="text-xs md:text-sm text-gray-600 leading-relaxed"
+                className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-xl"
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -164,8 +132,8 @@ const WeAreDifferent = () => {
               </motion.p>
             </div>
 
-            {/* Features List - More Compact */}
-            <div className="space-y-3 mb-4">
+            {/* Features List */}
+            <div className="space-y-4 mb-8">
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
@@ -177,24 +145,20 @@ const WeAreDifferent = () => {
                   }}
                   className="group"
                 >
-                  <div className="flex gap-3 items-start p-3 rounded-lg bg-white/40 backdrop-blur-sm shadow-sm hover:shadow-lg hover:bg-white/60 transition-all duration-300 border border-gray-100/50">
+                  <div className="flex gap-4 items-start p-4 rounded-xl bg-white shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200">
                     {/* Icon Container */}
-                    <motion.div 
-                      className="w-10 h-10 md:w-12 md:h-12 shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-br from-[var(--primary)]/10 to-[var(--primary)]/5 group-hover:from-[var(--primary)]/20 group-hover:to-[var(--primary)]/10 transition-all duration-300"
-                      whileHover={{ rotate: [0, -8, 8, -8, 0] }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <div className="scale-75 md:scale-90">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center rounded-lg bg-[#FFEEEF]">
+                      <div className="scale-90">
                         <feature.Icon />
                       </div>
-                    </motion.div>
+                    </div>
                     
                     {/* Text Content */}
-                    <div className="flex-1 space-y-0.5">
-                      <h3 className="font-lato text-xs md:text-sm lg:text-base font-bold text-[var(--secondary)] uppercase tracking-wide group-hover:text-[var(--primary)] transition-colors duration-300">
+                    <div className="flex-1 space-y-1">
+                      <h3 className="font-lato text-base sm:text-lg font-bold text-[var(--secondary)] group-hover:text-[var(--primary)] transition-colors duration-300">
                         {feature.title}
                       </h3>
-                      <p className="text-[11px] md:text-xs text-gray-600 leading-snug">
+                      <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                         {feature.description}
                       </p>
                     </div>
@@ -203,15 +167,14 @@ const WeAreDifferent = () => {
               ))}
             </div>
 
-            {/* Stats Bar - Compact Modern Design */}
+            {/* Stats Bar */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="mt-auto"
             >
-              <div className="flex items-center justify-between gap-2 p-3 rounded-lg bg-gradient-to-r from-[var(--primary)]/5 via-purple-500/5 to-[var(--primary)]/5 border border-[var(--primary)]/10">
+              <div className="grid grid-cols-3 gap-4 p-6 rounded-xl bg-white border border-gray-200 shadow-sm">
                 {[
                   { value: "500+", label: "Projects" },
                   { value: "98%", label: "Success" },
@@ -219,19 +182,19 @@ const WeAreDifferent = () => {
                 ].map((stat, index) => (
                   <motion.div
                     key={index}
-                    whileHover={{ scale: 1.08, y: -2 }}
-                    className="text-center flex-1"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    className="text-center"
                   >
                     <motion.div
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.5 + index * 0.1, type: "spring", stiffness: 200 }}
-                      className="text-lg md:text-xl lg:text-2xl font-bold text-[var(--primary)] mb-0"
+                      className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--primary)] mb-1"
                     >
                       {stat.value}
                     </motion.div>
-                    <div className="text-[9px] md:text-[10px] text-gray-600 font-medium uppercase tracking-wider">
+                    <div className="text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">
                       {stat.label}
                     </div>
                   </motion.div>
@@ -240,31 +203,25 @@ const WeAreDifferent = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Section - Full Image Without Box */}
+          {/* Right Section - Full Image */}
           <motion.div 
             variants={imageVariants}
-            className="w-full lg:w-[55%] flex items-stretch"
+            style={{ y }}
+            className="w-full lg:w-1/2"
           >
             <motion.div
-              whileHover={{ scale: 1.01 }}
+              whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
-              className="relative w-full h-full min-h-[350px] lg:min-h-[500px]"
+              className="relative p-4 pb-0 w-full h-[400px] sm:h-[500px] lg:h-[600px] xl:h-[700px] rounded-2xl overflow-hidden"
             >
-              {/* Full image without container/box */}
               <Image 
                 src={me_and_taief_img} 
-                alt="Akshaduzzaman and Taief" 
+                alt="exeyezone" 
                 placeholder="blur" 
-                className="w-full h-full object-cover"
-                style={{ objectPosition: 'center' }}
-              />
-              
-              {/* Subtle overlay gradient on hover */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/20 via-transparent to-transparent"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
+                priority
               />
             </motion.div>
           </motion.div>

@@ -1,58 +1,121 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 import taiefimg from "@/public/img/taief_img.png";
 
 const Hero = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Parallax effects
+  const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+
   return (
-    <div>
-            <div  className="container">
+    <div ref={containerRef}>
+            <div className="container">
                 <div className='flex flex-col md:flex-row gap-10 xl:gap-20 text-black font-poppins items-center'>
 
                   {/* RIGHT SIDE START HERE */}
-                    <div className='w-full '>
-                        <div>
-                            <h2 className='text-[var(--secondary)] text-4xl font-semibold xl:text-4xl 2xl:text-5xl'><span className='text-[var(--primary)]'>Expect</span> Nothing
+                    <motion.div 
+                      className='w-full'
+                      initial={{ opacity: 0, x: -50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
+                      style={{ y, opacity }}
+                    >
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: 0.2 }}
+                        >
+                            <h2 className='text-[var(--secondary)] text-4xl font-semibold xl:text-4xl 2xl:text-5xl'>
+                              <motion.span 
+                                className='text-[var(--primary)]'
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.8, delay: 0.4 }}
+                              >
+                                Expect
+                              </motion.span> Nothing
                             <br />Less than perfect</h2>
 
-                            <p className='text-xs 2xl:text-sm 2xl:leading-6 leading-5 text-gray-700 mt-5 font-lato '>Discover exeyezone.com, your gateway to premium services at unbeatable prices! From innovative branding to cutting-edge development and empowering training, we're committed to delivering excellence on time, every time. Join us and experience quality like never before.</p>
-                        </div>
+                            <motion.p 
+                              className='text-xs 2xl:text-sm 2xl:leading-6 leading-5 text-gray-700 mt-5 font-lato'
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.6, delay: 0.6 }}
+                            >
+                              Discover exeyezone.com, your gateway to premium services at unbeatable prices! From innovative branding to cutting-edge development and empowering training, we're committed to delivering excellence on time, every time. Join us and experience quality like never before.
+                            </motion.p>
+                        </motion.div>
 
-                        <div className="flex flex-row mt-5 gap-7 items-center">
-                            <div className="bg-[var(--primary)] hover:bg-[var(--secondary)] duration-200 text-white text-sm font-poppins px-7 py-3 rounded-md cursor-pointer">
-                                <Link href="/"> <p className='justify-center items-center text-center font-semibold'>Contact Now</p></Link>
-                            </div>
+                        <motion.div 
+                          className="flex flex-row mt-5 gap-7 items-center"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: 0.8 }}
+                        >
+                            <Link href="/contact">
+                              <motion.div 
+                                className="bg-[var(--primary)] hover:bg-[var(--secondary)] duration-200 text-white text-sm font-poppins px-7 py-3 rounded-md cursor-pointer"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <p className='justify-center items-center text-center font-semibold'>Contact Now</p>
+                              </motion.div>
+                            </Link>
 
-                            <div className="flex flex-row gap-2 items-center">
-                              <Link href="/hireus">
-                                <div className="border-2 p-2 border-[var(--primary)] hover:border-[var(--secondary)] duration-200 rounded-md">
-                                
+                            <Link href="/hireus" className="flex flex-row gap-2 items-center">
+                              <motion.div 
+                                className="flex flex-row gap-2 items-center"
+                                whileHover={{ x: 5 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                <div 
+                                  className="border-2 p-2 border-[var(--primary)] hover:border-[var(--secondary)] duration-200 rounded-md"
+                                >
                                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M7.96967 19.5303C7.7034 19.2641 7.6792 18.8474 7.89705 18.5538L7.96967 18.4697L14.439 12L7.96967 5.53033C7.7034 5.26406 7.6792 4.8474 7.89705 4.55379L7.96967 4.46967C8.23594 4.2034 8.6526 4.1792 8.94621 4.39705L9.03033 4.46967L16.0303 11.4697C16.2966 11.7359 16.3208 12.1526 16.1029 12.4462L16.0303 12.5303L9.03033 19.5303C8.73744 19.8232 8.26256 19.8232 7.96967 19.5303Z" fill="red"/>
+                                    <path d="M7.96967 19.5303C7.7034 19.2641 7.6792 18.8474 7.89705 18.5538L7.96967 18.4697L14.439 12L7.96967 5.53033C7.7034 5.26406 7.6792 4.8474 7.89705 4.55379L7.96967 4.46967C8.23594 4.2034 8.6526 4.1792 8.94621 4.39705L9.03033 4.46967L16.0303 11.4697C16.2966 11.7359 16.3208 12.1526 16.1029 12.4462L16.0303 12.5303L9.03033 19.5303C8.73744 19.8232 8.26256 19.8232 7.96967 19.5303Z" fill="red"/>
                                   </svg>
                                 </div>
-                              </Link>
+
+                                <div className='hover:text-[var(--primary)]'>
+                                  <h2 className='text-base font-semibold'>Hire us now</h2>
+                                </div>
+                              </motion.div>
+                            </Link>
+                        </motion.div>
 
 
-                              <div className='hover:text-[var(--primary)]'>
-                                <h2 className='text-base font-semibold'><Link href="/">Hire us now</Link></h2>
-                              </div>
-
-                            </div>
-                            
-                        </div>
-
-
-                        <div className="flex flex-row mt-5 items-center gap-3">
-                          <div className="bg-[var(--third)] p-3 rounded-md">
+                        <motion.div 
+                          className="flex flex-row mt-5 items-center gap-3"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: 1 }}
+                          whileHover={{ scale: 1.02 }}
+                        >
+                          <motion.div 
+                            className="bg-[var(--third)] p-3 rounded-md"
+                            whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                            transition={{ duration: 0.5 }}
+                          >
                               <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M9.74992 1.5C9.65892 1.5 9.43492 1.525 9.31592 1.763L7.48992 5.414C7.20092 5.991 6.64392 6.392 5.99992 6.484L1.91192 7.073C1.64192 7.112 1.54992 7.312 1.52192 7.396C1.49692 7.477 1.45692 7.683 1.64292 7.861L4.59892 10.701C5.06992 11.154 5.28392 11.807 5.17192 12.446L4.47592 16.456C4.43292 16.707 4.58992 16.853 4.65992 16.903C4.73392 16.959 4.93192 17.07 5.17692 16.942L8.83192 15.047C9.40792 14.75 10.0939 14.75 10.6679 15.047L14.3219 16.941C14.5679 17.068 14.7659 16.957 14.8409 16.903C14.9109 16.853 15.0679 16.707 15.0249 16.456L14.3269 12.446C14.2149 11.807 14.4289 11.154 14.8999 10.701L17.8559 7.861C18.0429 7.683 18.0029 7.476 17.9769 7.396C17.9499 7.312 17.8579 7.112 17.5879 7.073L13.4999 6.484C12.8569 6.392 12.2999 5.991 12.0109 5.413L10.1829 1.763C10.0649 1.525 9.84092 1.5 9.74992 1.5ZM4.94692 18.5C4.53392 18.5 4.12392 18.37 3.77292 18.114C3.16692 17.67 2.86992 16.937 2.99892 16.199L3.69492 12.189C3.72092 12.04 3.66992 11.889 3.55992 11.783L0.603916 8.943C0.0599161 8.422 -0.135084 7.652 0.0949161 6.937C0.326916 6.214 0.940916 5.697 1.69792 5.589L5.78592 5C5.94392 4.978 6.07992 4.881 6.14792 4.743L7.97492 1.091C8.31192 0.418 8.99192 0 9.74992 0C10.5079 0 11.1879 0.418 11.5249 1.091L13.3529 4.742C13.4219 4.881 13.5569 4.978 13.7139 5L17.8019 5.589C18.5589 5.697 19.1729 6.214 19.4049 6.937C19.6349 7.652 19.4389 8.422 18.8949 8.943L15.9389 11.783C15.8289 11.889 15.7789 12.04 15.8049 12.188L16.5019 16.199C16.6299 16.938 16.3329 17.671 15.7259 18.114C15.1109 18.565 14.3099 18.626 13.6309 18.272L9.97792 16.379C9.83492 16.305 9.66392 16.305 9.52092 16.379L5.86792 18.273C5.57592 18.425 5.26092 18.5 4.94692 18.5Z" fill="#131126"/>
                               </svg>
-                          </div>
+                          </motion.div>
 
                           <div className="text-sm">Rated 4.9 out of 1200 reviews</div>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
 
                   {/* RIGHT SIDE END HERE */}
 

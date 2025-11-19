@@ -14,7 +14,7 @@ const LatestProject = ({ product }) => {
   return (
     <div className='container pb-24'>
       <div className='justify-center text-center text-[var(--secondary)] pb-10'>
-        <p className='text-sm md:text-base text-[var(--primary)] font-semibold tracking-wider uppercase mb-2'>Featured Work</p>
+        <p className='text-sm md:text-base text-[var(--primary)] font-semibold tracking-wider uppercase mb-2'>Featured Products</p>
         <h2 className='text-3xl md:text-4xl xl:text-5xl font-poppins font-semibold'>
           <span className="text-[var(--primary)]">Our latest</span> products
         </h2>
@@ -65,10 +65,14 @@ const LatestProject = ({ product }) => {
               },
             }}
           >
-            {product.map((data, index) => (
+            {product.map((data, index) => {
+              // Get the product detail URL using slug
+              const productUrl = data.slug ? `/products/${data.slug}` : '/products';
+              
+              return (
               <SwiperSlide key={index}>
                 <div className="group flex flex-col gap-1 w-full pb-2">
-                  <Link href="/products" className="block rounded-2xl w-full overflow-hidden relative">
+                  <Link href={productUrl} className="block rounded-2xl w-full overflow-hidden relative">
                     <div className="relative w-full h-[250px] md:h-[280px] lg:h-[300px]">
                       <Image
                         src={typeof data.product_img === 'string' && data.product_img !== '' ? data.product_img : noImage}
@@ -91,7 +95,7 @@ const LatestProject = ({ product }) => {
                     </ul>
                   )}
 
-                  <Link href="/products">
+                  <Link href={productUrl}>
                     <h2 className="font-raleway font-bold text-base md:text-lg line-clamp-2 hover:text-[var(--primary)] transition-colors duration-300">
                       {typeof data.title === 'string' ? data.title : 'Untitled Product'}
                     </h2>
@@ -104,13 +108,14 @@ const LatestProject = ({ product }) => {
                         <span className="text-sm text-gray-500 line-through font-poppins">$ {(data.price * 1.2).toFixed(0)}</span>
                       </div>
                     )}
-                    <Link href="/products" className="group/btn border border-gradient-to-r from-[var(--secondary)] to-[var(--secondary)]/90 hover:from-[var(--primary)] hover:to-[var(--primary)]/90 p-3 rounded-xl  transform hover:scale-110 transition-all duration-500">
+                    <Link href={productUrl} className="group/btn border border-gradient-to-r from-[var(--secondary)] to-[var(--secondary)]/90 hover:from-[var(--primary)] hover:to-[var(--primary)]/90 p-3 rounded-xl  transform hover:scale-110 transition-all duration-500">
                       <svg xmlns="http://www.w3.org/2000/svg" className='hover:stroke-[var(--primary)] duration-200' width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </Link>
                   </div>
                 </div>
               </SwiperSlide>
-            ))}
+              );
+            })}
           </Swiper>
         )}
       </div>

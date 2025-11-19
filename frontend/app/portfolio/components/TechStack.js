@@ -121,7 +121,7 @@ const TechStack = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full relative z-10">
         <motion.div
           className="max-w-3xl mx-auto text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -135,9 +135,9 @@ const TechStack = () => {
           <p className="text-base md:text-lg text-gray-600 font-lato">
             We leverage cutting-edge technologies to build robust, scalable solutions
           </p>
-        </motion.div>
+          </motion.div>
 
-        <div className="max-w-7xl mx-auto">
+        <div className="container">
           <motion.div
             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 md:gap-6"
             initial={{ opacity: 0 }}

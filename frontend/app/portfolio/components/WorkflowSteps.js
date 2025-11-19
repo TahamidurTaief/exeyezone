@@ -57,9 +57,9 @@ const WorkflowSteps = () => {
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[#FFEEEF] rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full relative z-10">
         <motion.div
-          className="max-w-3xl mx-auto text-center mb-12 md:mb-16"
+          className="max-w-3xl mx-auto text-center mb-12 md:mb-16 container"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -73,7 +73,7 @@ const WorkflowSteps = () => {
           </p>
         </motion.div>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="container">
           {/* Desktop View - Grid with Arrows */}
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-12 relative">
             {/* SVG Arrow Connectors */}

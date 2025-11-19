@@ -1,54 +1,108 @@
+'use client';
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-
-
-
+import { motion } from 'framer-motion';
+import { Target, Eye, Users, Lightbulb, Rocket, TrendingUp, Globe } from 'lucide-react';
 
 const Mission = () => {
+  const goals = [
+    { icon: Users, title: 'Digital Access for All', color: 'var(--primary)' },
+    { icon: Lightbulb, title: 'Innovate with Purpose', color: 'var(--secondary)' },
+    { icon: Rocket, title: 'Support Entrepreneurs', color: 'var(--primary)' },
+    { icon: TrendingUp, title: 'Drive Tech Growth', color: 'var(--secondary)' },
+    { icon: Globe, title: 'Expand Beyond Borders', color: 'var(--primary)' },
+  ];
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
+
   return (
-    <div>
-      <div className="container  max-auto justify-center">
-        <div className="flex flex-col md:flex-row gap-6 md:gap-12 justify-between  mt-20 xl:mt-0">
-            <div className="flex flex-col w-full">
-                <div className="flex flex-col">
-                    <h1 className="text-2xl md:text-3xl font-poppins text-[var(--secondary)] font-semibold">Our <span className="text-primary">Mission</span></h1>
-                    <p className="text-sm md:text-md mt-2 font-lato text-gray-600 leading-6 text-justify">At ExeyeZone, our mission is to empower Bangladesh through smart, affordable digital solutions.
-We aim to simplify technology for people, businesses, and institutions by offering user-friendly, scalable, and reliable software and web services.
-Our focus is on accessibility, innovation, and impact, ensuring everyone benefits from the digital revolution.</p>
-                    {/* <p className="text-md md:text-lg font-lato text-gray-600 leading-[150%] mt-6 text-justify">Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id.</p> */}
-                </div>
+    <div className="relative py-16 md:py-20 bg-gray-50/50">/
 
-                <div className="flex flex-col ">
-                    <h1 className="text-2xl md:text-3xl font-poppins text-[var(--secondary)] leading-[100%] font-semibold">Our <span className="text-primary">Vision</span></h1>
-                    <p className="text-sm md:text-md mt-2 leading-6 font-lato text-gray-600   text-justify">Our vision is to see a fully digital Bangladesh where every individual and business thrives through technology.
-We strive to lead this transformation by making digital tools easy to use, locally relevant, and globally competitive.
-ExeyeZone envisions a future where innovation drives growth, inclusion, and national progress.</p>
-                    {/* <p className="text-md md:text-lg font-lato text-gray-600 leading-[150%] mt-6 text-justify">Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id.</p> */}
-                </div>
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          
+          {/* Mission Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2.5 rounded-lg" style={{ backgroundColor: 'var(--secondary)', opacity: 0.1 }}>
+                <Target className="w-5 h-5" style={{ color: 'var(--secondary)' }} />
+              </div>
+              <h2 className="text-xl md:text-2xl font-poppins font-bold text-gray-900">
+                Our <span style={{ color: 'var(--primary)' }}>Mission</span>
+              </h2>
             </div>
+            <p className="text-sm md:text-base font-lato text-gray-600 leading-relaxed">
+              At ExeyeZone, our mission is to empower Bangladesh through smart, affordable digital solutions.
+              We aim to simplify technology for people, businesses, and institutions by offering user-friendly, scalable, and reliable software and web services.
+            </p>
+          </motion.div>
 
-            <div className="flex flex-col w-full">
-                <h1 className="text-2xl md:text-3xl font-poppins text-[var(--secondary)] leading-[100%] font-semibold">Our <span className="text-primary">Goals</span></h1>
-                <ul className="list-disc font-lato text-sm md:text-md text-gray-600 flex flex-col gap-4 mt-4">
-                  <li><b>Digital Access for All:</b> Create inclusive, user-friendly platforms that allow every Bangladeshi to participate in the digital economy.</li>
-                  <li><b>Innovate with Purpose:</b> Build smart, secure, and scalable software solutions tailored to local needs and global standards.</li>
-                  <li><b>Support Entrepreneurs and Enterprises:</b> Provide affordable, reliable services that help startups, SMEs, and large businesses thrive in the digital age.</li>
-                  <li><b>Drive National Tech Growth:</b> Collaborate with educational, governmental, and private sectors to accelerate Bangladesh’s journey toward a knowledge-based economy.</li>
-                  <li><b>Expand Beyond Borders:</b> Position ExeyeZone as a global tech brand born in Bangladesh — built for the world.</li>
-                </ul>
+          {/* Vision Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2.5 rounded-lg" style={{ backgroundColor: 'var(--primary)', opacity: 0.1 }}>
+                <Eye className="w-5 h-5" style={{ color: 'var(--primary)' }} />
+              </div>
+              <h2 className="text-xl md:text-2xl font-poppins font-bold text-gray-900">
+                Our <span style={{ color: 'var(--primary)' }}>Vision</span>
+              </h2>
             </div>
+            <p className="text-sm md:text-base font-lato text-gray-600 leading-relaxed">
+              Our vision is to see a fully digital Bangladesh where every individual and business thrives through technology.
+              We strive to lead this transformation by making digital tools easy to use, locally relevant, and globally competitive.
+            </p>
+          </motion.div>
+
+          {/* Goals Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
+          >
+            <h2 className="text-xl md:text-2xl font-poppins font-bold text-gray-900 mb-4">
+              Our <span style={{ color: 'var(--primary)' }}>Goals</span>
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {goals.map((goal, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  className="inline-flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 transition-all"
+                >
+                  <goal.icon className="w-4 h-4" style={{ color: goal.color }} />
+                  <span className="text-xs md:text-sm font-lato text-gray-700">{goal.title}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Mission
+export default Mission;
