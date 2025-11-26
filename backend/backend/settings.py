@@ -20,12 +20,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'rest_framework',
     'corsheaders',
     'api',
     "ckeditor", 
     "ckeditor_uploader",
     'django_filters',
+
+    'career',
+    'courses',
+    'users',
+    'payments',
+    'promotions',
 ]
 
 MIDDLEWARE = [
