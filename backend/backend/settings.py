@@ -28,11 +28,13 @@ INSTALLED_APPS = [
     "ckeditor_uploader",
     'django_filters',
 
-    'career',
-    'courses',
-    'users',
-    'payments',
-    'promotions',
+    # Custom apps
+    'blog',
+    # 'career',  # Commented out - app not found
+    # 'courses',  # Commented out temporarily
+    # 'users',  # Commented out temporarily
+    # 'payments',  # Commented out temporarily
+    # 'promotions',  # Commented out temporarily
 ]
 
 MIDDLEWARE = [
