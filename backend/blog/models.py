@@ -79,11 +79,6 @@ class BlogCategory(models.Model):
     def get_absolute_url(self):
         """Returns the canonical URL for this category"""
         return reverse('blog:category-detail', kwargs={'slug': self.slug})
-    
-    @property
-    def post_count(self):
-        """Returns the count of published posts in this category"""
-        return self.blog_posts.filter(status='published').count()
 
 
 class BlogSubCategory(models.Model):
@@ -167,11 +162,6 @@ class BlogSubCategory(models.Model):
     def get_absolute_url(self):
         """Returns the canonical URL for this subcategory"""
         return reverse('blog:subcategory-detail', kwargs={'slug': self.slug})
-    
-    @property
-    def post_count(self):
-        """Returns the count of published posts in this subcategory"""
-        return self.blog_posts.filter(status='published').count()
 
 
 class BlogPost(models.Model):

@@ -1,3 +1,5 @@
+import blogAPI from '../utils/api/blogApi';
+
 export const revalidate = 86400; // Revalidate every 24 hours
 
 export default async function sitemap() {
@@ -23,6 +25,10 @@ export default async function sitemap() {
     });
     const services = servicesRes.ok ? await servicesRes.json() : [];
     
+    // Fetch all blog posts with revalidation
+    const blogResponse = await blogAPI.getSitemapData();
+    const blogPosts = blogResponse.success ? blogResponse.data : [];
+    
     // Generate product URLs
     const productUrls = products.map((product) => ({
       url: `${baseUrl}/products/${product.slug}`,
@@ -47,6 +53,14 @@ export default async function sitemap() {
       priority: 0.7,
     }));
 
+    // Generate blog URLs
+    const blogUrls = blogPosts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: post.updated_at || post.publish_date,
+      changeFrequency: 'weekly',
+      priority: post.is_featured ? 0.9 : 0.7,
+    }));
+
     // Static pages
     const staticPages = [
       {
@@ -54,6 +68,12 @@ export default async function sitemap() {
         lastModified: new Date().toISOString(),
         changeFrequency: 'daily',
         priority: 1,
+      },
+      {
+        url: `${baseUrl}/blog`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'daily',
+        priority: 0.9,
       },
       {
         url: `${baseUrl}/products`,
@@ -105,7 +125,7 @@ export default async function sitemap() {
       },
     ];
 
-    return [...staticPages, ...productUrls, ...courseUrls, ...serviceUrls];
+    return [...staticPages, ...productUrls, ...courseUrls, ...serviceUrls, ...blogUrls];
   } catch (error) {
     console.error('Error generating sitemap:', error);
     // Return at least static pages if API fetch fails
@@ -115,6 +135,12 @@ export default async function sitemap() {
         lastModified: new Date().toISOString(),
         changeFrequency: 'daily',
         priority: 1,
+      },
+      {
+        url: `${baseUrl}/blog`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'daily',
+        priority: 0.9,
       },
       {
         url: `${baseUrl}/products`,

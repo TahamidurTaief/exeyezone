@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import BlogCategory, BlogSubCategory, BlogPost
 from django.utils import timezone
+from django.conf import settings
+from django.conf import settings
 
 
 class BlogCategoryListSerializer(serializers.ModelSerializer):
@@ -135,7 +137,7 @@ class BlogPostListSerializer(serializers.ModelSerializer):
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
     url = serializers.SerializerMethodField()
     is_published = serializers.BooleanField(read_only=True)
-    display_image = serializers.ImageField(read_only=True)
+    display_image = serializers.SerializerMethodField()
     
     class Meta:
         model = BlogPost
@@ -164,6 +166,18 @@ class BlogPostListSerializer(serializers.ModelSerializer):
     
     def get_url(self, obj):
         return obj.get_absolute_url()
+    
+    def get_display_image(self, obj):
+        """Return image URL or default no_image.jpg"""
+        request = self.context.get('request')
+        if obj.display_image:
+            if request:
+                return request.build_absolute_uri(obj.display_image.url)
+            return obj.display_image.url
+        # Return default no_image.jpg
+        if request:
+            return request.build_absolute_uri(settings.STATIC_URL + 'img/no_image.jpg')
+        return settings.STATIC_URL + 'img/no_image.jpg'
 
 
 class BlogPostDetailSerializer(serializers.ModelSerializer):
@@ -175,7 +189,7 @@ class BlogPostDetailSerializer(serializers.ModelSerializer):
     subcategory = BlogSubCategoryListSerializer(read_only=True)
     url = serializers.SerializerMethodField()
     is_published = serializers.BooleanField(read_only=True)
-    display_image = serializers.ImageField(read_only=True)
+    display_image = serializers.SerializerMethodField()
     
     # SEO meta data
     seo_meta = serializers.SerializerMethodField()
@@ -219,10 +233,34 @@ class BlogPostDetailSerializer(serializers.ModelSerializer):
     def get_url(self, obj):
         return obj.get_absolute_url()
     
+    def get_display_image(self, obj):
+        """Return image URL or default no_image.jpg"""
+        request = self.context.get('request')
+        if obj.display_image:
+            if request:
+                return request.build_absolute_uri(obj.display_image.url)
+            return obj.display_image.url
+        # Return default no_image.jpg
+        if request:
+            return request.build_absolute_uri(settings.STATIC_URL + 'img/no_image.jpg')
+        return settings.STATIC_URL + 'img/no_image.jpg'
+    
     def get_seo_meta(self, obj):
         """
         Return structured SEO metadata for easy frontend consumption.
         """
+        request = self.context.get('request')
+        # Get OG image URL with fallback to default
+        og_image_url = None
+        if obj.display_image:
+            og_image_url = obj.display_image.url
+            if request:
+                og_image_url = request.build_absolute_uri(og_image_url)
+        else:
+            og_image_url = settings.STATIC_URL + 'img/no_image.jpg'
+            if request:
+                og_image_url = request.build_absolute_uri(og_image_url)
+        
         return {
             'title': obj.meta_title or obj.title,
             'description': obj.meta_description or obj.excerpt,
@@ -230,7 +268,7 @@ class BlogPostDetailSerializer(serializers.ModelSerializer):
             'canonical_url': obj.canonical_url or obj.get_absolute_url(),
             'og_title': obj.og_title or obj.meta_title or obj.title,
             'og_description': obj.og_description or obj.meta_description or obj.excerpt,
-            'og_image': obj.display_image.url if obj.display_image else None,
+            'og_image': og_image_url,
             'allow_indexing': obj.allow_indexing,
             'author': obj.author_name,
             'published_time': obj.publish_date,
